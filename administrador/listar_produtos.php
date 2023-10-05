@@ -88,7 +88,7 @@ try {
                     <td><img src="<?php echo $produto['imagem']; ?>" alt="Imagem do Produto" width="50"></td>
                     <td>
                         <a href="editar_produto.php?id=<?php echo $produto['id']; ?>">Editar</a>
-                        <a href="excluir_produto.php?<?php echo $produto['id']; ?>">Excluir</a>
+                        <a href="excluir_produto.php?id=<?php echo $produto['id']; ?>">Excluir</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
