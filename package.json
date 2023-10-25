@@ -1,0 +1,23 @@
+{
+  "name": "ticket-manager",
+  "version": "1.0.0",
+  "description": "Projeto de gerenciamento de ingressos em PHP para 2° Semestre - Sistemas para Internet",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sass": "sass --watch assets/scss/style.scss:assets/css/style.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thfrod/ticket-manager.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thfrod/ticket-manager/issues"
+  },
+  "homepage": "https://github.com/thfrod/ticket-manager#readme",
+  "dependencies": {
+    "sass": "^1.62.1"
+  }
+}

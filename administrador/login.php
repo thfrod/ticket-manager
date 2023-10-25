@@ -1,30 +1,29 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tela de login</title>
-</head>
-<body>
-    <h2>Login do Admnistrador</h2>
+<?php
+require_once("../shared/head.php");
+?>
+<body class="login-content">
 
-    <form action="processa_login.php" method="post"> 
-        <label for="nome">Nome:</label>
-        <input type="text" name="nome" id="nome" required>
-        <p> 
-        <label for="senha">Senha:</label>
-        <input type="password" name="senha" id="senha" required>
-        <p>
-        <input type="submit" value="entrar">
+    <form action="processa_login.php" method="post" class="container my-3">
+
+        <h2>Login do Administrador</h2>
+
+        <div class="input-group mb-3">
+            <input class="form-control" type="text" name="nome" id="nome" required placeholder="Nome">
+        </div>
+
+        <div class="input-group mb-3">
+            <input type="password" name="senha" id="senha" required class="form-control" placeholder="Senha">
+        </div>
         
+        <input type="submit" value="Entrar" class="btn btn-primary">
+
         <?php
-        if(isset($_GET['erro'])){
-            echo'<p style="color:red;"> Nome de usuario ou senha incorretos</p>';
+        if (isset($_GET['erro'])) {
+            echo '<p style="color:red;" class="mt-3"> Nome de usuario ou senha incorretos</p>';
         }
         // post é para informações confidenciais
         //Required indica que é obrigatório preencher o campo
         ?>
     </form>
+
 </body>
-</html>
