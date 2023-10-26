@@ -5,7 +5,7 @@ require_once('../conexao/conexao.php'); // o arquivo de conexão é requirido e 
 
 $nome = $_POST['nome']; // a variavel nome vai receber via POST o nome que o usuário digitar o 'nome' está vinculado ao login.php
 $senha = $_POST['senha'];
-echo $nome, $senha; 
+echo $nome, $senha;
 $sql = "SELECT * FROM administrador WHERE ADM_NOME = :nome AND ADM_SENHA = :senha AND ADM_ATIVO = 1"; // quer ver se isso existe no BD, usou ( : ) para vincular com o $query
 
 $query = $pdo->prepare($sql); // variavel que vai receber a consulta sql de cima e o "prepare" vai preparar uma instrução sql para o PDO

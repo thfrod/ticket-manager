@@ -1,7 +1,9 @@
 <?php
+$title = 'Login';
 require_once("../shared/head.php");
 ?>
-<body class="login-content">
+
+<body class="login-content d-flex justify-content-center align-items-center">
 
     <form action="processa_login.php" method="post" class="container my-3">
 
@@ -14,7 +16,7 @@ require_once("../shared/head.php");
         <div class="input-group mb-3">
             <input type="password" name="senha" id="senha" required class="form-control" placeholder="Senha">
         </div>
-        
+
         <input type="submit" value="Entrar" class="btn btn-primary">
 
         <?php

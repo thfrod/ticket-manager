@@ -13,6 +13,7 @@ html {
 .login-content {
   display: block;
   height: 100%;
+  min-height: 100vh;
 }
 .login-content form {
   margin: 0 auto;
