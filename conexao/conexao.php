@@ -3,7 +3,7 @@
 //configurações do banco de dados
 
 $host = 'localhost';
-$db = 'thfrod';
+$db = 'bravo';
 $user = 'root';
 $pass = 'P@$$w0rd';
 $charset = 'utf8mb4';

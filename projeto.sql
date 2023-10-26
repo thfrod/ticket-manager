@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 06-Out-2023 às 00:43
--- Versão do servidor: 8.0.31
--- versão do PHP: 8.1.12
+-- Tempo de geração: 26/10/2023 às 22:09
+-- Versão do servidor: 10.4.28-MariaDB
+-- Versão do PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,84 +18,114 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Banco de dados: `projeto`
+-- Banco de dados: `bravo`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `administrador`
+-- Estrutura para tabela `administrador`
 --
-CREATE DATABASE thfrod;
-use thfrod;
-
+CREATE DATABASE bravo;
+use bravo;
 CREATE TABLE `administrador` (
-  `id` int NOT NULL,
-  `adm_nome` varchar(100) NOT NULL,
-  `adm_senha` varchar(20) NOT NULL,
-  `adm_ativo` varchar(2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `ADM_ID` int(11) NOT NULL,
+  `ADM_NOME` varchar(500) NOT NULL,
+  `ADM_EMAIL` varchar(500) NOT NULL,
+  `ADM_SENHA` varchar(500) NOT NULL,
+  `ADM_ATIVO` tinyint(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Extraindo dados da tabela `administrador`
+-- Despejando dados para a tabela `administrador`
 --
 
-INSERT INTO `administrador` (`id`, `adm_nome`, `adm_senha`, `adm_ativo`) VALUES
-(1, 'adm', '12345', '1');
+INSERT INTO `administrador` (`ADM_ID`, `ADM_NOME`, `ADM_EMAIL`, `ADM_SENHA`, `ADM_ATIVO`) VALUES
+(1, 'thfrod', 'thfrod@gmail.com', '1234', 1);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `produtos`
+-- Estrutura para tabela `categoria`
 --
 
-CREATE TABLE `produtos` (
-  `id` int NOT NULL,
-  `nome` varchar(255) NOT NULL,
-  `descricao` varchar(255) NOT NULL,
-  `preco` int NOT NULL,
-  `imagem` varchar(255) NOT NULL,
-  `url_imagem` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `categoria` (
+  `CATEGORIA_ID` int(11) NOT NULL,
+  `CATEGORIA_NOME` varchar(500) NOT NULL,
+  `CATEGORIA_DESC` varchar(8000) NOT NULL,
+  `CATEGORIA_ATIVO` bit(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
 
 --
--- Extraindo dados da tabela `produtos`
+-- Estrutura para tabela `produto`
 --
 
-INSERT INTO `produtos` (`id`, `nome`, `descricao`, `preco`, `imagem`, `url_imagem`) VALUES
-(1, 'tonin', 'tonin tornado', 199999, '../uploads/toninho.jpeg', 'http://localhost/thfrod/ticket-manager/../uploads/toninho.jpeg');
+CREATE TABLE `produto` (
+  `PRODUTO_ID` int(11) NOT NULL,
+  `PRODUTO_NOME` varchar(500) NOT NULL,
+  `PRODUTO_DESC` varchar(8000) NOT NULL,
+  `PRODUTO_PRECO` decimal(5,2) NOT NULL,
+  `PRODUTO_DESCONTO` decimal(5,2) NOT NULL,
+  `CATEGORIA_ID` int(11) NOT NULL,
+  `PRODUTO_ATIVO` bit(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `produto_estoque`
+--
+
+CREATE TABLE `produto_estoque` (
+  `PRODUTO_ID` int(11) NOT NULL,
+  `PRODUTO_QTD` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Índices para tabelas despejadas
 --
 
 --
--- Índices para tabela `administrador`
+-- Índices de tabela `administrador`
 --
 ALTER TABLE `administrador`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`ADM_ID`);
 
 --
--- Índices para tabela `produtos`
+-- Índices de tabela `categoria`
 --
-ALTER TABLE `produtos`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `categoria`
+  ADD PRIMARY KEY (`CATEGORIA_ID`);
 
 --
--- AUTO_INCREMENT de tabelas despejadas
+-- Índices de tabela `produto`
+--
+ALTER TABLE `produto`
+  ADD PRIMARY KEY (`PRODUTO_ID`);
+
+--
+-- AUTO_INCREMENT para tabelas despejadas
 --
 
 --
 -- AUTO_INCREMENT de tabela `administrador`
 --
 ALTER TABLE `administrador`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ADM_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT de tabela `produtos`
+-- AUTO_INCREMENT de tabela `categoria`
 --
-ALTER TABLE `produtos`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `categoria`
+  MODIFY `CATEGORIA_ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `produto`
+--
+ALTER TABLE `produto`
+  MODIFY `PRODUTO_ID` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
