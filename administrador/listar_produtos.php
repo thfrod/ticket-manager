@@ -1,4 +1,8 @@
 <?php
+
+$title = 'Listagem de produtos';
+require_once("../shared/head.php");
+
 session_start();
 
 if (!isset($_SESSION['admin_logado'])) {
@@ -18,54 +22,22 @@ try {
 
 ?>
 
-<!DOCTYPE html>
-<html lang="pt">
+<body class="listar-produtos-content container my-3">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <h2>Lista de Produtos</h2>
+        <a href="painel_admin.php" class="btn btn-primary">Voltar ao Painel</a>
+    </div>
 
-<head>
-    <meta charset="UTF-8">
-    <title>Listagem de Produtos</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th,
-        td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        tr:hover {
-            /* Quando o usuário passa o mouse sobre uma linha da tabela (<tr>), o fundo (background-color) dessa linha muda para #f5f5f5, que é um cinza claro.  */
-            background-color: #f5f5f5;
-        }
-    </style>
-
-    <script>
-        function confirmarExclusao() {
-            return confirm('Tem certeza que deseja excluir este produto?');
-        }
-    </script>
-</head>
-
-<body>
-    <h2>Lista de Produtos</h2>
-    <table>
+    <table class="table table-striped table-bordered">
 
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Descrição</th>
-                <th>Preço</th>
-                <th>Imagem</th>
-                <th>Ações</th>
+                <th scope="col" class="text-center">ID</th>
+                <th scope="col" class="text-center">Nome</th>
+                <th scope="col" class="text-center">Descrição</th>
+                <th scope="col" class="text-center">Preço</th>
+                <!-- <th scope="col" class="text-center">Imagem</th> -->
+                <th scope="col" class="text-center">Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -73,28 +45,30 @@ try {
             <?php foreach ($produtos as $produto): ?>
                 <tr>
 
-                    <td>
-                        <?php echo $produto['id']; ?>
+                    <td class="text-center">
+                        <?php echo $produto['PRODUTO_ID']; ?>
                     </td>
-                    <td>
-                        <?php echo $produto['nome']; ?>
+                    <td class="text-center">
+                        <?php echo $produto['PRODUTO_NOME']; ?>
                     </td>
-                    <td>
-                        <?php echo $produto['descricao']; ?>
+                    <td class="text-center">
+                        <?php echo $produto['PRODUTO_DESC']; ?>
                     </td>
-                    <td>
-                        <?php echo $produto['preco']; ?>
+                    <td class="text-center">
+                        <?php echo $produto['PRODUTO_PRECO']; ?>
                     </td>
-                    <td><img src="<?php echo $produto['imagem']; ?>" alt="Imagem do Produto" width="50"></td>
-                    <td>
-                        <a href="editar_produto.php?id=<?php echo $produto['id']; ?>">Editar</a>
-                        <a href="excluir_produto.php?id=<?php echo $produto['id']; ?>">Excluir</a>
+                    <!-- <td><img src="<?php #echo $produto['imagem']; ?>" alt="Imagem do Produto" width="50"></td> -->
+                    <td class="text-center">
+                        <a href="editar_produto.php?id=<?php echo $produto['PRODUTO_ID']; ?>" class="btn btn-primary">
+
+                            <img src="../assets/imgs/icons/edit.svg" alt="">
+                        </a>
+                        <a href="excluir_produto.php?id=<?php echo $produto['PRODUTO_ID']; ?>" class="btn btn-danger">
+                            <img src="../assets/imgs/icons/trash.svg" alt="">
+                        </a>
                     </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
-    <a href="painel_admin.php">Voltar ao Painel</a>
 </body>
-
-</html>

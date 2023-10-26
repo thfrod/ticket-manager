@@ -57,24 +57,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // se o método usado for POST execu
 
 ?>
 
-<body>
-    <h2>Cadastrar Produto</h2>
+<body class="cadastrar-produto-content container my-3">
+
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <h2>Cadastrar Produto</h2>
+        <a href="painel_admin.php" class="btn btn-primary">Voltar ao Painel</a>
+    </div>
+
     <form action="" method="post" enctype="multipart/form-data">
-        <label for="nome">Nome: </label>
-        <input type="text" name="nome" id="nome" required>
-        <p>
-            <label for="descricao"> Descrição: </label>
-            <textarea name="descricao" id="descricao" required></textarea>
-        <p>
-            <label for="preco">Preço: </label>
-            <input type="number" name="preco" id="preco" step="0.01" required>
-        <p>
-            <label for="imagem">Imagem</label>
-            <input type="file" name="imagem" id="imagem">
-        <p>
-            <input type="submit" value="Cadastrar" class="btn btn-success">
-        <p>
+        <div class="input-group mb-3">
+            <input class="form-control" type="text" name="nome" id="nome" required placeholder="Nome">
+        </div>
+
+        <div class="input-group mb-3">
+            <input class="form-control" type="text" name="descricao" id="descricao" required placeholder="Descrição">
+        </div>
+
+        <div class="input-group mb-3">
+            <input class="form-control" type="number" name="preco" id="preco" step="0.01" required placeholder="Preço">
+        </div>
+
+        <div class="input-group mb-3">
+            <input class="form-control" type="text" name="nome" id="nome" required placeholder="Nome">
+        </div>
+
+        <div class="input-group mb-3">
+            <input class="form-control" type="file" name="imagem" id="imagem" required placeholder="Imagem">
+        </div>
+
+        <input type="submit" value="Cadastrar" class="btn btn-success">
 
     </form>
-    <a href="painel_admin.php" class="btn btn-primary">Voltar ao Painel do Administrador</a>
 </body>
