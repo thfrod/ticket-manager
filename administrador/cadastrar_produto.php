@@ -57,35 +57,40 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // se o método usado for POST execu
 
 ?>
 
-<body class="cadastrar-produto-content container my-3">
+<body class="cadastrar-produto-content d-flex">
+    <?php require("../shared/aside.php") ?>
 
-    <div class="d-flex align-items-center justify-content-between mb-3">
-        <h2>Cadastrar Produto</h2>
-        <a href="painel_admin.php" class="btn btn-primary">Voltar ao Painel</a>
+    <div class="container my-3">
+        <div class="d-flex align-items-center justify-content-between mb-3">
+            <h2>Cadastrar Produto</h2>
+            <a href="painel_admin.php" class="btn btn-primary">Voltar ao Painel</a>
+        </div>
+
+        <form action="" method="post" enctype="multipart/form-data">
+            <div class="input-group mb-3">
+                <input class="form-control" type="text" name="nome" id="nome" required placeholder="Nome">
+            </div>
+
+            <div class="input-group mb-3">
+                <input class="form-control" type="text" name="descricao" id="descricao" required
+                    placeholder="Descrição">
+            </div>
+
+            <div class="input-group mb-3">
+                <input class="form-control" type="number" name="preco" id="preco" step="0.01" required
+                    placeholder="Preço">
+            </div>
+
+            <div class="input-group mb-3">
+                <input class="form-control" type="text" name="nome" id="nome" required placeholder="Nome">
+            </div>
+
+            <div class="input-group mb-3">
+                <input class="form-control" type="file" name="imagem" id="imagem" required placeholder="Imagem">
+            </div>
+
+            <input type="submit" value="Cadastrar" class="btn btn-success">
+
+        </form>
     </div>
-
-    <form action="" method="post" enctype="multipart/form-data">
-        <div class="input-group mb-3">
-            <input class="form-control" type="text" name="nome" id="nome" required placeholder="Nome">
-        </div>
-
-        <div class="input-group mb-3">
-            <input class="form-control" type="text" name="descricao" id="descricao" required placeholder="Descrição">
-        </div>
-
-        <div class="input-group mb-3">
-            <input class="form-control" type="number" name="preco" id="preco" step="0.01" required placeholder="Preço">
-        </div>
-
-        <div class="input-group mb-3">
-            <input class="form-control" type="text" name="nome" id="nome" required placeholder="Nome">
-        </div>
-
-        <div class="input-group mb-3">
-            <input class="form-control" type="file" name="imagem" id="imagem" required placeholder="Imagem">
-        </div>
-
-        <input type="submit" value="Cadastrar" class="btn btn-success">
-
-    </form>
 </body>

@@ -57,34 +57,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 
-<body class="editar-produto-content container my-3">
+<body class="editar-produto-content d-flex">
+    <?php require("../shared/aside.php") ?>
+    <div class="container my-3">
+        <div class="d-flex align-items-center justify-content-between mb-3">
+            <h2>Editar Produto</h2>
+            <a href="listar_produtos.php" class="btn btn-primary">Voltar à Lista de Produtos</a>
+        </div>
 
-    <div class="d-flex align-items-center justify-content-between mb-3">
-        <h2>Editar Produto</h2>
-        <a href="listar_produtos.php" class="btn btn-primary">Voltar à Lista de Produtos</a>
+        <form action="" method="post" enctype="multipart/form-data">
+            <!-- Essa linha cria um campo de entrada (input) oculto no formulário. Um campo de entrada oculto é usado quando você quer incluir um dado no formulário que não precisa ser visível ou editável pelo usuário, mas que precisa ser enviado junto com os outros dados quando o formulário é submetido. -->
+            <input type="hidden" name="id" value="<?php echo $produto['PRODUTO_ID']; ?>">
+
+            <div class="input-group mb-3">
+                <input class="form-control" type="text" name="nome" id="nome" required placeholder="Nome">
+            </div>
+
+            <div class="input-group mb-3">
+                <input class="form-control" type="text" name="descricao" id="descricao" required
+                    placeholder="Descrição">
+            </div>
+
+            <div class="input-group mb-3">
+                <input class="form-control" type="number" name="preco" id="preco" step="0.01" required
+                    placeholder="Preço">
+            </div>
+
+            <div class="input-group mb-3">
+                <input class="form-control" type="file" name="imagem" id="imagem" required placeholder="Imagem">
+            </div>
+
+            <input type="submit" value="Atualizar Produto" class="btn btn-success">
+
+        </form>
     </div>
-
-    <form action="" method="post" enctype="multipart/form-data">
-        <!-- Essa linha cria um campo de entrada (input) oculto no formulário. Um campo de entrada oculto é usado quando você quer incluir um dado no formulário que não precisa ser visível ou editável pelo usuário, mas que precisa ser enviado junto com os outros dados quando o formulário é submetido. -->
-        <input type="hidden" name="id" value="<?php echo $produto['PRODUTO_ID']; ?>">
-
-        <div class="input-group mb-3">
-            <input class="form-control" type="text" name="nome" id="nome" required placeholder="Nome">
-        </div>
-
-        <div class="input-group mb-3">
-            <input class="form-control" type="text" name="descricao" id="descricao" required placeholder="Descrição">
-        </div>
-
-        <div class="input-group mb-3">
-            <input class="form-control" type="number" name="preco" id="preco" step="0.01" required placeholder="Preço">
-        </div>
-
-        <div class="input-group mb-3">
-            <input class="form-control" type="file" name="imagem" id="imagem" required placeholder="Imagem">
-        </div>
-
-        <input type="submit" value="Atualizar Produto" class="btn btn-success">
-
-    </form>
 </body>
