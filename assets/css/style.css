@@ -10,6 +10,10 @@ html {
   scroll-behavior: smooth;
 }
 
+/*
+.bg-primary {
+    background-color: $azulEscuro !important;
+}*/
 .aside-content .menu-logo {
   width: 200px;
   height: 100px;

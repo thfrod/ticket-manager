@@ -12,8 +12,9 @@ if (!isset($_SESSION['admin_logado'])) {
 }
 ?>
 
-<body class="my-3">
-    <div class="container">
+<body class="painel-admin-content d-flex">
+<?php require("../shared/aside.php") ?>
+    <div class="container my-3">
         <h2>Bem vindo</h2>
         <a href="cadastrar_produto.php" class="btn btn-primary">
             Cadastrar Produto
