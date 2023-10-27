@@ -10,6 +10,12 @@ html {
   scroll-behavior: smooth;
 }
 
+.aside-content .menu-logo {
+  width: 200px;
+  height: 100px;
+  object-fit: cover;
+}
+
 .login-content {
   display: block;
   height: 100%;

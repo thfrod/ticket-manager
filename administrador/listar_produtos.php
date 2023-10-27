@@ -22,53 +22,56 @@ try {
 
 ?>
 
-<body class="listar-produtos-content container my-3">
-    <div class="d-flex align-items-center justify-content-between mb-3">
-        <h2>Lista de Produtos</h2>
-        <a href="painel_admin.php" class="btn btn-primary">Voltar ao Painel</a>
-    </div>
-
-    <table class="table table-striped table-bordered">
-
-        <thead>
-            <tr>
-                <th scope="col" class="text-center">ID</th>
-                <th scope="col" class="text-center">Nome</th>
-                <th scope="col" class="text-center">Descrição</th>
-                <th scope="col" class="text-center">Preço</th>
-                <!-- <th scope="col" class="text-center">Imagem</th> -->
-                <th scope="col" class="text-center">Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-
-            <?php foreach ($produtos as $produto): ?>
+<body class="listar-produtos-content d-flex">
+    <?php require("../shared/aside.php") ?>
+    <div class="container my-3">
+        <div class="d-flex align-items-center justify-content-between mb-3">
+            <h2>Lista de Produtos</h2>
+            <a href="painel_admin.php" class="btn btn-primary">Voltar ao Painel</a>
+        </div>
+    
+        <table class="table table-striped table-bordered">
+    
+            <thead>
                 <tr>
-
-                    <td class="text-center">
-                        <?php echo $produto['PRODUTO_ID']; ?>
-                    </td>
-                    <td class="text-center">
-                        <?php echo $produto['PRODUTO_NOME']; ?>
-                    </td>
-                    <td class="text-center">
-                        <?php echo $produto['PRODUTO_DESC']; ?>
-                    </td>
-                    <td class="text-center">
-                        <?php echo $produto['PRODUTO_PRECO']; ?>
-                    </td>
-                    <!-- <td><img src="<?php #echo $produto['imagem']; ?>" alt="Imagem do Produto" width="50"></td> -->
-                    <td class="text-center">
-                        <a href="editar_produto.php?id=<?php echo $produto['PRODUTO_ID']; ?>" class="btn btn-primary">
-
-                            <img src="../assets/imgs/icons/edit.svg" alt="">
-                        </a>
-                        <a href="excluir_produto.php?id=<?php echo $produto['PRODUTO_ID']; ?>" class="btn btn-danger">
-                            <img src="../assets/imgs/icons/trash.svg" alt="">
-                        </a>
-                    </td>
+                    <th scope="col" class="text-center">ID</th>
+                    <th scope="col" class="text-center">Nome</th>
+                    <th scope="col" class="text-center">Descrição</th>
+                    <th scope="col" class="text-center">Preço</th>
+                    <!-- <th scope="col" class="text-center">Imagem</th> -->
+                    <th scope="col" class="text-center">Ações</th>
                 </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+    
+                <?php foreach ($produtos as $produto): ?>
+                    <tr>
+    
+                        <td class="text-center">
+                            <?php echo $produto['PRODUTO_ID']; ?>
+                        </td>
+                        <td class="text-center">
+                            <?php echo $produto['PRODUTO_NOME']; ?>
+                        </td>
+                        <td class="text-center">
+                            <?php echo $produto['PRODUTO_DESC']; ?>
+                        </td>
+                        <td class="text-center">
+                            <?php echo $produto['PRODUTO_PRECO']; ?>
+                        </td>
+                        <!-- <td><img src="<?php #echo $produto['imagem']; ?>" alt="Imagem do Produto" width="50"></td> -->
+                        <td class="text-center">
+                            <a href="editar_produto.php?id=<?php echo $produto['PRODUTO_ID']; ?>" class="btn btn-primary">
+    
+                                <img src="../assets/imgs/icons/edit.svg" alt="">
+                            </a>
+                            <a href="excluir_produto.php?id=<?php echo $produto['PRODUTO_ID']; ?>" class="btn btn-danger">
+                                <img src="../assets/imgs/icons/trash.svg" alt="">
+                            </a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
 </body>
