@@ -13,7 +13,7 @@ $mensagem = '';
 if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
     $id = $_GET['id'];
     try {
-        $stmt = $pdo->prepare("DELETE FROM PRODUTOS WHERE ID = :id");
+        $stmt = $pdo->prepare("DELETE FROM PRODUTOS WHERE PRODUTO_ID = :id");
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
 
@@ -29,13 +29,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
 ?>
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
     <meta charset="UTF-8">
     <title>Excluir Produto</title>
 </head>
+
 <body>
-<h2>Excluir Produto</h2>
-<p><?php echo $mensagem; ?></p>
-<a href="listar_produtos.php">Voltar à Lista de Produtos</a>
+    <h2>Excluir Produto</h2>
+    <p>
+        <?php echo $mensagem; ?>
+    </p>
+    <a href="listar_produtos.php">Voltar à Lista de Produtos</a>
 </body>
+
 </html>

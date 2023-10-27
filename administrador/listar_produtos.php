@@ -29,9 +29,9 @@ try {
             <h2>Lista de Produtos</h2>
             <a href="painel_admin.php" class="btn btn-primary">Voltar ao Painel</a>
         </div>
-    
+
         <table class="table table-striped table-bordered">
-    
+
             <thead>
                 <tr>
                     <th scope="col" class="text-center">ID</th>
@@ -43,10 +43,10 @@ try {
                 </tr>
             </thead>
             <tbody>
-    
+
                 <?php foreach ($produtos as $produto): ?>
                     <tr>
-    
+
                         <td class="text-center">
                             <?php echo $produto['PRODUTO_ID']; ?>
                         </td>
@@ -57,12 +57,13 @@ try {
                             <?php echo $produto['PRODUTO_DESC']; ?>
                         </td>
                         <td class="text-center">
+                            R$
                             <?php echo $produto['PRODUTO_PRECO']; ?>
                         </td>
                         <!-- <td><img src="<?php #echo $produto['imagem']; ?>" alt="Imagem do Produto" width="50"></td> -->
                         <td class="text-center">
                             <a href="editar_produto.php?id=<?php echo $produto['PRODUTO_ID']; ?>" class="btn btn-primary">
-    
+
                                 <img src="../assets/imgs/icons/edit.svg" alt="">
                             </a>
                             <a href="excluir_produto.php?id=<?php echo $produto['PRODUTO_ID']; ?>" class="btn btn-danger">
