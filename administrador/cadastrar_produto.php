@@ -82,10 +82,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // se o método usado for POST execu
             </div>
 
             <div class="input-group mb-3">
-                <input class="form-control" type="text" name="nome" id="nome" required placeholder="Nome">
-            </div>
-
-            <div class="input-group mb-3">
                 <input class="form-control" type="file" name="imagem" id="imagem" required placeholder="Imagem">
             </div>
 
