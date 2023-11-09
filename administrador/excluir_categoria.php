@@ -22,14 +22,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
         $stmt->execute();
 
         if ($stmt->rowCount() > 0) {
-            header("Location:listar_categorias.php?success");
+            header("Location:listar_categorias.php?success=Categoria excluída com successo");
         } else {
-            header("Location:listar_categorias.php?error");
+            header("Location:listar_categorias.php?error=Erro ao excluír categoria");
         }
     } catch (PDOException $e) {
-        header("Location:listar_categorias.php?error");
+        header("Location:listar_categorias.php?error=Erro ao excluír categoria");
     }
 } else {
-    header("Location:listar_categorias.php?error");
+    header("Location:listar_categorias.php?error=Erro ao excluír categoria");
 }
 ?>
