@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // se o método usado for POST execu
         $stmt = $pdo->prepare($sql); // (prepare) é um método do pdo que impede qualquer ação que um invasor tente fazer
         $stmt->bindParam(':nome', $nome, PDO::PARAM_STR); // verifica se a variavel nome que foi escrita atende os parâmetros do PDO
         $stmt->bindParam(':descricao', $descricao, PDO::PARAM_STR);
-        $stmt->bindParam(':status', $status, PDO::PARAM_STR);
+        $stmt->bindParam(':status', $status, PDO::PARAM_BOOL);
         $stmt->execute();
 
         header("Location:listar_categorias.php?sucess='Categoria cadastrada com sucesso'");
@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // se o método usado for POST execu
 
     <div class="container my-3">
         <div class="d-flex align-items-center justify-content-between mb-3">
-            <h2>Cadastrar Produto</h2>
+            <h2>Cadastrar Categoria</h2>
             <a href="painel_admin.php" class="btn btn-primary">Voltar ao Painel</a>
         </div>
 

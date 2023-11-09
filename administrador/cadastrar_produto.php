@@ -37,8 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // se o método usado for POST execu
         $stmt->bindParam(':descricao', $descricao, PDO::PARAM_STR);
         $stmt->bindParam(':preco', $preco, PDO::PARAM_STR);
         $stmt->bindParam(':desconto', $desconto, PDO::PARAM_STR);
-        $stmt->bindParam(':categoria', $categoria, PDO::PARAM_STR);
-        $stmt->bindParam(':ativo', $ativo, PDO::PARAM_STR);
+        $stmt->bindParam(':categoria', $categoria, PDO::PARAM_INT);
+        $stmt->bindParam(':ativo', $ativo, PDO::PARAM_BOOL);
         $stmt->execute();
 
         $produto_id = $pdo->lastInsertId();
