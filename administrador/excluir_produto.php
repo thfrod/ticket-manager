@@ -13,34 +13,22 @@ $mensagem = '';
 if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
     $id = $_GET['id'];
     try {
-        $stmt = $pdo->prepare("DELETE FROM PRODUTOS WHERE PRODUTO_ID = :id");
+        $stmt = $pdo->prepare("UPDATE PRODUTO 
+        SET PRODUTO_ATIVO = 0
+        WHERE PRODUTO_ID = :id");
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
 
         if ($stmt->rowCount() > 0) {
-            $mensagem = "Produto excluído com sucesso!";
+            header("Location:listar_produtos.php?success");
+
         } else {
-            $mensagem = "Erro ao excluir o produto. Tente novamente.";
+            header("Location:listar_produtos.php?");
         }
     } catch (PDOException $e) {
-        $mensagem = "Erro: " . $e->getMessage();
+        header("Location:listar_produtos.php?error");
     }
+} else {
+    header("Location:listar_produtos.php?error");
 }
 ?>
-<!DOCTYPE html>
-<html lang="pt">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Excluir Produto</title>
-</head>
-
-<body>
-    <h2>Excluir Produto</h2>
-    <p>
-        <?php echo $mensagem; ?>
-    </p>
-    <a href="listar_produtos.php">Voltar à Lista de Produtos</a>
-</body>
-
-</html>

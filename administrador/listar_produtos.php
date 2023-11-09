@@ -39,7 +39,7 @@ try {
                 <tr>
                     <th scope="col" class="text-center">ID</th>
                     <th scope="col" class="text-center">Nome</th>
-                    <th scope="col" class="text-center">Descrição</th>
+                    <th scope="col" class="text-center desc">Descrição</th>
                     <th scope="col" class="text-center">Preço</th>
                     <!-- <th scope="col" class="text-center">Imagem</th> -->
                     <th scope="col" class="text-center">Ações</th>
@@ -56,7 +56,7 @@ try {
                         <td class="text-center">
                             <?php echo $produto['PRODUTO_NOME']; ?>
                         </td>
-                        <td class="text-center">
+                        <td class="text-center desc">
                             <?php echo $produto['PRODUTO_DESC']; ?>
                         </td>
                         <td class="text-center">

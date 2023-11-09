@@ -22,33 +22,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
         $stmt->execute();
 
         if ($stmt->rowCount() > 0) {
-            $mensagem = "Categoria inativada com sucesso!";
+            header("Location:listar_categorias.php?success");
         } else {
-            $mensagem = "Erro ao inativar o categoria. Tente novamente.";
+            header("Location:listar_categorias.php?error");
         }
     } catch (PDOException $e) {
-        $mensagem = "Erro: " . $e->getMessage();
+        header("Location:listar_categorias.php?error");
     }
+} else {
+    header("Location:listar_categorias.php?error");
 }
 ?>
-
-<body>
-
-</body>
-
-</html>
-
-<body class="cadastrar-produto-content d-flex">
-    <?php require("../shared/aside.php") ?>
-
-    <div class="container my-3">
-        <div class="d-flex align-items-center justify-content-between mb-3">
-            <h2>Inativar categoria</h2>
-            <a href="painel_admin.php" class="btn btn-primary">Voltar ao Painel</a>
-        </div>
-        <p>
-            <?php echo $mensagem; ?>
-        </p>
-        <a href="listar_categorias.php">Voltar à Lista de categorias</a>
-    </div>
-</body>

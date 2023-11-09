@@ -18,6 +18,10 @@
                     <span class="material-symbols-outlined text-white">list</span>
                     <span class="mt-1 ms-2 d-none d-sm-inline text-white">Categorias</span>
                 </a>
+                <a href="listar_adms.php" class="nav-link align-middle px-0 d-flex align-items-center">
+                    <span class="material-symbols-outlined text-white">people</span>
+                    <span class="mt-1 ms-2 d-none d-sm-inline text-white">Usuários</span>
+                </a>
             </li>
         </ul>
     </div>

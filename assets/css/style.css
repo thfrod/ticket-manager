@@ -31,4 +31,14 @@ html {
   text-align: center;
 }
 
+.painel-admin-content .icon-wrapper {
+  height: fit-content;
+  width: fit-content;
+}
+
+body.listar-produtos-content table th.desc,
+body.listar-produtos-content table td.desc {
+  max-width: 200px;
+}
+
 /*# sourceMappingURL=style.css.map */
