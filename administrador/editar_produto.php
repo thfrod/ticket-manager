@@ -23,6 +23,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
             $produto = $stmt->fetch(PDO::FETCH_ASSOC); //$produto é um array associativo que contém os detalhes do produto que foi recuperado do banco de dados. Por exemplo, se a tabela de produtos tem colunas como ID, NOME, DESCRICAO, PRECO, e URL_IMAGEM, então o array $produto terá essas chaves, e você pode acessar os valores correspondentes usando a sintaxe de colchetes, 
+
+            $stmtCategoria = $pdo->prepare("SELECT CATEGORIA_NOME, CATEGORIA_ID FROM CATEGORIA");
+            $stmtCategoria->execute();
+            $categorias = $stmtCategoria->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             echo "Erro: " . $e->getMessage();
         }
@@ -49,10 +53,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->bindParam(':url_imagem', $url_imagem, PDO::PARAM_STR);
         $stmt->execute();
 
-        header('Location: listar_produtos.php');
+        header("Location:listar_produtos.php?success=Produto atualizado com successo");
+
         exit();
+
     } catch (PDOException $e) {
-        echo "Erro: " . $e->getMessage();
+        header("Location:listar_produtos.php?error=Erro ao atualizar produto");
     }
 }
 ?>
@@ -65,29 +71,60 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <a href="listar_produtos.php" class="btn btn-primary">Voltar à Lista de Produtos</a>
         </div>
 
+
         <form action="" method="post" enctype="multipart/form-data">
-            <!-- Essa linha cria um campo de entrada (input) oculto no formulário. Um campo de entrada oculto é usado quando você quer incluir um dado no formulário que não precisa ser visível ou editável pelo usuário, mas que precisa ser enviado junto com os outros dados quando o formulário é submetido. -->
             <input type="hidden" name="id" value="<?php echo $produto['PRODUTO_ID']; ?>">
 
             <div class="input-group mb-3">
-                <input class="form-control" type="text" name="nome" id="nome" required placeholder="Nome">
+                <input class="form-control" type="text" name="nome" id="nome" required placeholder="Nome"
+                    value="<?php echo $produto['PRODUTO_NOME']; ?>">
             </div>
 
             <div class="input-group mb-3">
-                <input class="form-control" type="text" name="descricao" id="descricao" required
-                    placeholder="Descrição">
+                <input class="form-control" type="text" name="descricao" id="descricao" required placeholder="Descrição"
+                    value="<?php echo $produto['PRODUTO_DESC']; ?>">
+            </div>
+
+            <div class="input-group mb-3">
+                <select class="form-control" name="status" id="status" required placeholder="Status">
+                    <option value="1" <?php echo $produto['PRODUTO_ATIVO'] == 1 ? 'selected' : ''; ?>>
+                        Ativa
+                    </option>
+                    <option value="0" <?php echo $produto['PRODUTO_ATIVO'] == 0 ? 'selected' : ''; ?>>
+                        Inativa
+                    </option>
+                </select>
+            </div>
+
+            <div class="input-group mb-3">
+                <select class="form-control" name="categoria" id="categoria" required>
+                    <option value="0" selected disabled>Selecione uma categoria</option>
+                    <?php foreach ($categorias as $categoria): ?>
+                        <option value="<?php echo $categoria['CATEGORIA_ID'] ?>" <?php echo $produto['CATEGORIA_ID'] == $categoria['CATEGORIA_ID'] ? 'selected' : ''; ?>>
+                            <?php echo $categoria['CATEGORIA_NOME'] ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
             </div>
 
             <div class="input-group mb-3">
                 <input class="form-control" type="number" name="preco" id="preco" step="0.01" required
-                    placeholder="Preço">
+                    placeholder="Preço" value="<?php echo $produto['PRODUTO_PRECO']; ?>">
             </div>
 
             <div class="input-group mb-3">
-                <input class="form-control" type="file" name="imagem" id="imagem" required placeholder="Imagem">
+                <input class="form-control" type="number" name="desconto" id="desconto" step="0.01" required
+                    placeholder="Desconto" value="<?php echo $produto['PRODUTO_DESCONTO']; ?>">
             </div>
 
-            <input type="submit" value="Atualizar Produto" class="btn btn-success">
+
+            AQUI DEVE VIR A LISTA DE IMAGENS RELACIONADAS AQUELE PRODUTO POREM AINDA NÂO FIZ O SELECT JOIN NO BANCO DE
+            DADOS
+            <!-- <div class="input-group mb-3">
+                <input class="form-control" type="text" name="imagem" id="imagem" required placeholder="Imagem" value="<?php echo $produto['PRODUTO_DESC']; ?>">
+            </div> -->
+
+            <input type="submit" value="Cadastrar" class="btn btn-success">
 
         </form>
     </div>

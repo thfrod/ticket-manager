@@ -49,11 +49,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // se o método usado for POST execu
         $stmt_imagem->bindParam(':produto_id', $produto_id, PDO::PARAM_INT);
         $stmt_imagem->execute();
 
-        header("Location:listar_produtos.php?sucess='Produto cadastrada com sucesso'");
+        header("Location:listar_produtos.php?success=Produto cadastrado com successo");
 
     } catch (PDOException $e) {
-        echo "<p style='color:red;'>Erro ao cadastrar produto" . $e->getMessage() . "</p>";
-        header("Location:listar_produtos.php?error='Erro ao cadastrar produto'");
+        header("Location:listar_produtos.php?error=Erro ao cadastrar produto");
     }
     ;
 }

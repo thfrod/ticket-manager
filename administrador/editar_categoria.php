@@ -41,9 +41,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // se o método usado for POST execu
         $stmt->bindParam(':status', $status, PDO::PARAM_BOOL);
         $stmt->execute();
 
-        echo "<p style='color:green;> Categoria cadastro com sucesso!</p>";
+        header("Location:listar_categorias.php?success=Categoria atualizada com successo");
     } catch (PDOException $e) {
-        echo "<p style='color:red;'>Erro ao cadastrar categoria" . $e->getMessage() . "</p>";
+        header("Location:listar_categorias.php?error=Erro ao editar categoria");
+
     }
     ;
 }
