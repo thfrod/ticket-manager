@@ -1,14 +1,22 @@
 <?php
 
-//configurações do banco de dados
+// BD REMOTO
+// $host = '144.22.157.228';
+// $db = 'Bravo';
+// $user = 'Bravo';
+// $pass = 'Bravo';
 
+//BD LOCAL
 $host = 'localhost';
 $db = 'bravo';
 $user = 'root';
 $pass = 'P@$$w0rd';
+
+$port = '3306';
+
 $charset = 'utf8mb4';
 
-$dsn = "mysql:host = $host;dbname=$db;charset=$charset"; // qual driver de BD será usado, no caso (mysql)
+$dsn = "mysql:host=$host;port=$port;dbname=$db;charset=$charset"; // qual driver de BD será usado, no caso (mysql)
 
 // criando a conexão com o BD através do PDO 
 try { // tratamento de exceções, erros
