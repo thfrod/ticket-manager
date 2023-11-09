@@ -13,7 +13,7 @@ if (!isset($_SESSION['admin_logado'])) {
 require_once('../conexao/conexao.php');
 
 try {
-    $stmt = $pdo->prepare("SELECT * FROM CATEGORIA");
+    $stmt = $pdo->prepare("SELECT * FROM CATEGORIA WHERE CATEGORIA_ATIVO = 1");
     $stmt->execute();
     $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC); //Recupera todos os registros retornados pela consulta SQL e os armazena na variável $produtos como um array associativo, onde as chaves do array são os nomes das colunas da tabela PRODUTOS
 } catch (PDOException $e) {

@@ -13,7 +13,7 @@ if (!isset($_SESSION['admin_logado'])) { //se não está definido a variável gl
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     try {
-        $stmt = $pdo->prepare("SELECT CATEGORIA_NOME, CATEGORIA_ID FROM CATEGORIA");
+        $stmt = $pdo->prepare("SELECT CATEGORIA_NOME, CATEGORIA_ID FROM CATEGORIA WHERE CATEGORIA_ATIVO = 1");
         $stmt->execute();
         $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
