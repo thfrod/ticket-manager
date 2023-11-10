@@ -26,9 +26,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // se o método usado for POST execu
     $descricao = $_POST['descricao'];
     $preco = $_POST['preco'];
     $ativo = $_POST['ativo'];
-    $url_imagem = $_POST['imagem'];
     $desconto = $_POST['desconto'];
     $categoria = $_POST['categoria'];
+    $imagens = $_POST['imagem_url'];
 
     try {
         $sql = "INSERT INTO PRODUTO (PRODUTO_NOME, PRODUTO_DESC, PRODUTO_PRECO, PRODUTO_DESCONTO, CATEGORIA_ID, PRODUTO_ATIVO) VALUES(:nome, :descricao, :preco, :desconto, :categoria, :ativo)";
@@ -42,13 +42,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // se o método usado for POST execu
         $stmt->execute();
 
         $produto_id = $pdo->lastInsertId();
-
-        $sql_imagem = "INSERT INTO PRODUTO_IMAGEM (IMAGEM_URL, PRODUTO_ID, IMAGEM_ORDEM) VALUES (:url_imagem, :produto_id, 1)";
-        $stmt_imagem = $pdo->prepare($sql_imagem);
-        $stmt_imagem->bindParam(':url_imagem', $url_imagem, PDO::PARAM_STR);
-        $stmt_imagem->bindParam(':produto_id', $produto_id, PDO::PARAM_INT);
-        $stmt_imagem->execute();
-
+        foreach ($imagens as $ordem => $url_imagem) {
+            $sql_imagem = "INSERT INTO PRODUTO_IMAGEM (IMAGEM_URL, PRODUTO_ID, IMAGEM_ORDEM) VALUES (:url_imagem, :produto_id, :ordem_imagem)";
+            $stmt_imagem = $pdo->prepare($sql_imagem);
+            $stmt_imagem->bindParam(':url_imagem', $url_imagem, PDO::PARAM_STR);
+            $stmt_imagem->bindParam(':produto_id', $produto_id, PDO::PARAM_INT);
+            $stmt_imagem->bindParam(':ordem_imagem', $ordem, PDO::PARAM_INT);
+            $stmt_imagem->execute();
+        }
         header("Location:listar_produtos.php?success=Produto cadastrado com successo");
 
     } catch (PDOException $e) {
@@ -107,12 +108,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // se o método usado for POST execu
                     placeholder="Desconto">
             </div>
 
-            <div class="input-group mb-3">
-                <input class="form-control" type="text" name="imagem" id="imagem" required placeholder="Imagem">
+            <div class="d-flex">
+                <div class="input-group mb-3">
+                    <input class="form-control" type="text" name="imagem_url[]" required placeholder="Imagem">
+                </div>
+                <div class="btn btn-primary rounded-circle p-1 btn-add-img" onclick="adicionarImagem()">
+                    <span class="material-symbols-outlined text-white">add</span>
+                </div>
             </div>
 
-            <input type="submit" value="Cadastrar" class="btn btn-success">
+            <div class="container-imgs"></div>
 
+
+            <input type="submit" value="Cadastrar" class="btn btn-success">
         </form>
     </div>
+    <script>
+        // Adiciona um novo campo de imagem URL.
+        function adicionarImagem() {
+            const containerImagens = document.querySelector('.container-imgs');
+            const novoInput = document.createElement('div');
+            novoInput.classList.add('input-group', 'mb-3');
+            novoInput.innerHTML = `<input class="form-control" type="text" name="imagem_url[]" required placeholder="Imagem">`;
+            containerImagens.appendChild(novoInput);
+        }
+    </script>
 </body>

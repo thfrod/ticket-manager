@@ -29,14 +29,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') { // se o método usado for POST execute o if
+    $id = $_POST['id'];
     $nome = $_POST['nome'];
     $descricao = $_POST['descricao'];
     $status = $_POST['status'];
 
     try {
-        $sql = "INSERT INTO CATEGORIA (CATEGORIA_NOME, CATEGORIA_DESC, CATEGORIA_ATIVO) VALUES(:nome, :descricao, :status)";
-        $stmt = $pdo->prepare($sql); // (prepare) é um método do pdo que impede qualquer ação que um invasor tente fazer
-        $stmt->bindParam(':nome', $nome, PDO::PARAM_STR); // verifica se a variavel nome que foi escrita atende os parâmetros do PDO
+        $sql = "UPDATE CATEGORIA SET CATEGORIA_NOME = :nome, CATEGORIA_DESC = :descricao, CATEGORIA_ATIVO = :status WHERE CATEGORIA_ID = :id";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->bindParam(':nome', $nome, PDO::PARAM_STR);
         $stmt->bindParam(':descricao', $descricao, PDO::PARAM_STR);
         $stmt->bindParam(':status', $status, PDO::PARAM_BOOL);
         $stmt->execute();
@@ -62,6 +64,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // se o método usado for POST execu
         </div>
 
         <form action="" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="id" value="<?php echo $categoria['CATEGORIA_ID']; ?>">
+
             <div class="input-group mb-3">
                 <input class="form-control" type="text" name="nome" id="nome" required placeholder="Nome"
                     value="<?php echo $categoria['CATEGORIA_NOME']; ?>">

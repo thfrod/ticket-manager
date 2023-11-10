@@ -41,4 +41,11 @@ body.listar-produtos-content table td.desc {
   max-width: 200px;
 }
 
+.cadastrar-produto-content .btn-add-img {
+  margin-left: 5px;
+  display: flex;
+  align-items: center;
+  height: fit-content;
+}
+
 /*# sourceMappingURL=style.css.map */

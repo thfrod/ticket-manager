@@ -1,6 +1,6 @@
 <?php
 
-$title = 'Listagem de categorias';
+$title = 'Listagem de Administradores';
 require_once("../shared/head.php");
 
 session_start();
@@ -13,7 +13,7 @@ if (!isset($_SESSION['admin_logado'])) {
 require_once('../conexao/conexao.php');
 
 try {
-    $stmt = $pdo->prepare("SELECT ADM_ID, ADM_NOME, ADM_EMAIL,ADM_ATIVO FROM ADMINISTRADOR");
+    $stmt = $pdo->prepare("SELECT ADM_ID, ADM_NOME, ADM_EMAIL,ADM_ATIVO FROM ADMINISTRADOR ORDER BY ADM_ATIVO DESC");
     $stmt->execute();
     $adms = $stmt->fetchAll(PDO::FETCH_ASSOC); //Recupera todos os registros retornados pela consulta SQL e os armazena na variável $produtos como um array associativo, onde as chaves do array são os nomes das colunas da tabela PRODUTOS
 } catch (PDOException $e) {
@@ -26,10 +26,10 @@ try {
     <?php require("../shared/aside.php") ?>
     <div class="container my-3">
         <div class="d-flex align-items-center justify-content-between mb-3">
-            <h2>Lista de ADMs</h2>
+            <h2>Lista de Administradores</h2>
             <div>
                 <a href="painel_admin.php" class="btn btn-primary">Voltar ao Painel</a>
-                <a href="cadastrar_categoria.php" class="btn btn-primary">Adicionar categoria</a>
+                <a href="cadastrar_adm.php" class="btn btn-primary">Adicionar Administrador</a>
             </div>
         </div>
 
@@ -37,7 +37,6 @@ try {
 
             <thead>
                 <tr>
-                    <th scope="col" class="text-center">ID</th>
                     <th scope="col" class="text-center">Nome</th>
                     <th scope="col" class="text-center">E-mail</th>
                     <th scope="col" class="text-center">Status</th>
@@ -48,10 +47,6 @@ try {
 
                 <?php foreach ($adms as $adm): ?>
                     <tr>
-
-                        <td class="text-center">
-                            <?php echo $adm['ADM_ID']; ?>
-                        </td>
                         <td class="text-center">
                             <?php echo $adm['ADM_NOME']; ?>
                         </td>
