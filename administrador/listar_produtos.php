@@ -13,7 +13,7 @@ if (!isset($_SESSION['admin_logado'])) {
 require_once('../conexao/conexao.php');
 
 try {
-    $stmt = $pdo->prepare("SELECT p.PRODUTO_ID,p.PRODUTO_NOME, p.PRODUTO_DESC, p.PRODUTO_PRECO, p.PRODUTO_DESCONTO, p.PRODUTO_ATIVO, pi.IMAGEM_URL, c.CATEGORIA_NOME from PRODUTO p inner join PRODUTO_IMAGEM pi on p.PRODUTO_ID = pi.PRODUTO_ID inner join CATEGORIA c on p.CATEGORIA_ID = c.CATEGORIA_ID order by p.PRODUTO_NOME, p.PRODUTO_ATIVO DESC");
+    $stmt = $pdo->prepare("SELECT p.PRODUTO_ID,p.PRODUTO_NOME, p.PRODUTO_DESC, p.PRODUTO_PRECO, p.PRODUTO_DESCONTO, p.PRODUTO_ATIVO, pi.IMAGEM_URL, c.CATEGORIA_NOME, pe.PRODUTO_QTD from PRODUTO p inner join PRODUTO_IMAGEM pi on p.PRODUTO_ID = pi.PRODUTO_ID inner join CATEGORIA c on p.CATEGORIA_ID = c.CATEGORIA_ID left outer join PRODUTO_ESTOQUE pe on p.PRODUTO_ID = pe.PRODUTO_ID order by p.PRODUTO_NOME, p.PRODUTO_ATIVO DESC");
     $stmt->execute();
     $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC); //Recupera todos os registros retornados pela consulta SQL e os armazena na variável $produtos como um array associativo, onde as chaves do array são os nomes das colunas da tabela PRODUTOS
 } catch (PDOException $e) {
@@ -43,6 +43,7 @@ try {
                     <th scope="col" class="text-center">Preço</th>
                     <th scope="col" class="text-center">Desconto</th>
                     <th scope="col" class="text-center">Categoria</th>
+                    <th scope="col" class="text-center">Estoque</th>
                     <th scope="col" class="text-center">Status</th>
                     <th scope="col" class="text-center">Ações</th>
                 </tr>
@@ -58,7 +59,11 @@ try {
                             <?php echo $produto['PRODUTO_NOME']; ?>
                         </td>
                         <td class="text-center desc">
-                            <?php echo $produto['PRODUTO_DESC']; ?>
+                            <?php 
+                                $descricao = $produto['PRODUTO_DESC'];
+                                if(strlen($descricao) > 60) $descricao = substr($descricao, 0, 60).'...';
+                                echo $descricao; 
+                            ?>
                         </td>
                         <td class="text-center">
                             R$
@@ -70,6 +75,9 @@ try {
                         </td>
                         <td class="text-center">
                             <?php echo $produto['CATEGORIA_NOME']; ?>
+                        </td>
+                        <td class="text-center">
+                            <?php echo $produto['PRODUTO_QTD'] ? $produto['PRODUTO_QTD'] : 0; ?>
                         </td>
                         <td class="text-center">
                             <?php echo $produto['PRODUTO_ATIVO'] ? 'Ativo' : 'Inativo'; ?>
