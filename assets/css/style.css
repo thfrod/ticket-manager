@@ -40,6 +40,9 @@ body.listar-produtos-content table th.desc,
 body.listar-produtos-content table td.desc {
   max-width: 200px;
 }
+body.listar-produtos-content table th, body.listar-produtos-content table td {
+  vertical-align: middle;
+}
 
 .cadastrar-produto-content .btn-add-img {
   margin-left: 5px;
