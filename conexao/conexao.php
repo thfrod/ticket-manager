@@ -1,16 +1,16 @@
 <?php
 
 // BD REMOTO
-// $host = '144.22.157.228';
-// $db = 'Bravo';
-// $user = 'Bravo';
-// $pass = 'Bravo';
+$host = '144.22.157.228';
+$db = 'Bravo';
+$user = 'Bravo';
+$pass = 'Bravo';
 
 //BD LOCAL
-$host = 'localhost';
-$db = 'bravo';
-$user = 'root';
-$pass = 'P@$$w0rd';
+// $host = 'localhost';
+// $db = 'bravo';
+// $user = 'root';
+// $pass = 'P@$$w0rd';
 
 $port = '3306';
 
