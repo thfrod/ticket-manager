@@ -10,10 +10,13 @@ html {
   scroll-behavior: smooth;
 }
 
-/*
-.bg-primary {
-    background-color: $azulEscuro !important;
-}*/
+.btn-add-img {
+  margin-left: 5px;
+  display: flex;
+  align-items: center;
+  height: fit-content;
+}
+
 .aside-content .menu-logo {
   width: 200px;
   height: 100px;
@@ -39,13 +42,6 @@ html {
 body.listar-produtos-content table th.desc,
 body.listar-produtos-content table td.desc {
   max-width: 200px;
-}
-
-.cadastrar-produto-content .btn-add-img {
-  margin-left: 5px;
-  display: flex;
-  align-items: center;
-  height: fit-content;
 }
 
 /*# sourceMappingURL=style.css.map */
