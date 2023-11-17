@@ -27,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // se o método usado for POST execu
     $preco = $_POST['preco'];
     $ativo = $_POST['ativo'];
     $desconto = $_POST['desconto'];
+    $estoque = $_POST['estoque'];
     $categoria = $_POST['categoria'];
     $imagens = $_POST['imagem_url'];
 
@@ -42,6 +43,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // se o método usado for POST execu
         $stmt->execute();
 
         $produto_id = $pdo->lastInsertId();
+
+        $sql_estoque = "INSERT INTO PRODUTO_ESTOQUE (PRODUTO_ID, PRODUTO_QTD) VALUES (:produto_id, :produto_qtd)";
+        $stmt_estoque = $pdo->prepare($sql_estoque);
+        $stmt_estoque->bindParam(':produto_id', $produto_id, PDO::PARAM_INT);
+        $stmt_estoque->bindParam(':produto_qtd', $estoque, PDO::PARAM_INT);
+        $stmt_estoque->execute();
+
         foreach ($imagens as $ordem => $url_imagem) {
             $sql_imagem = "INSERT INTO PRODUTO_IMAGEM (IMAGEM_URL, PRODUTO_ID, IMAGEM_ORDEM) VALUES (:url_imagem, :produto_id, :ordem_imagem)";
             $stmt_imagem = $pdo->prepare($sql_imagem);
@@ -106,6 +114,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // se o método usado for POST execu
             <div class="input-group mb-3">
                 <input class="form-control" type="number" name="desconto" id="desconto" step="0.01" required
                     placeholder="Desconto">
+            </div>
+
+            <div class="input-group mb-3">
+                <input class="form-control" type="number" name="estoque" id="estoque" step="1" required
+                    placeholder="Estoque">
             </div>
 
             <div class="d-flex">

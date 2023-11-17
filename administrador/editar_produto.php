@@ -35,10 +35,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $imagens = $stmtImagens->fetchAll(PDO::FETCH_ASSOC); //Recupera todos os registros retornados pela consulta SQL e os armazena na variável $produtos como um array associativo, onde as chaves do array são os nomes das colunas da tabela PRODUTOS
 
         } catch (PDOException $e) {
-            echo "Erro: " . $e->getMessage();
+            header("Location:listar_produtos.php?error=Erro ao editar produto");
+
         }
     } else {
-        header('Location: listar_produtos.php');
+        header("Location:listar_produtos.php?error=Erro ao editar produto");
+
         exit();
     }
 }
