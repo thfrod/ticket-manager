@@ -43,5 +43,8 @@ body.listar-produtos-content table th.desc,
 body.listar-produtos-content table td.desc {
   max-width: 200px;
 }
+body.listar-produtos-content table th, body.listar-produtos-content table td {
+  vertical-align: middle;
+}
 
 /*# sourceMappingURL=style.css.map */
