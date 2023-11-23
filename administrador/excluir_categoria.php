@@ -5,7 +5,7 @@ require_once("../shared/head.php");
 
 session_start();
 
-if (!isset($_SESSION['admin_logado'])) {
+if (!isset($_SESSION['admin_logado']) || $_SESSION['admin_logado'] == false ) {
     header('Location: login.php');
     exit();
 }

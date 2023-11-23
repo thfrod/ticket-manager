@@ -4,7 +4,7 @@ $title = 'Painel';
 require_once("../shared/head.php");
 
 session_start();
-if (!isset($_SESSION['admin_logado'])) {
+if (!isset($_SESSION['admin_logado']) || $_SESSION['admin_logado'] == false ) {
     //isset, se não estiver definido um adm logado redireciona(header) para a página de login
     header("Location:login.php"); // header direciona para outro lugar
     exit();

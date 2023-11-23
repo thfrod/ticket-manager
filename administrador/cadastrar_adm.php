@@ -6,7 +6,7 @@ require_once("../shared/head.php");
 
 session_start();
 require_once('../conexao/conexao.php');
-if (!isset($_SESSION['admin_logado'])) { //se não está definido a variável global admin_logado redireciona para tela de login
+if (!isset($_SESSION['admin_logado']) || $_SESSION['admin_logado'] == false ) { //se não está definido a variável global admin_logado redireciona para tela de login
     header("Location:login.php"); // redireciona para tela de login
     exit(); // impede que as próximas linhas sejam executadas
 }
