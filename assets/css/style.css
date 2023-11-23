@@ -34,6 +34,24 @@ html {
   text-align: center;
 }
 
+body.ver-produto-content .btn-ver-imagens span {
+  vertical-align: middle;
+}
+body.ver-produto-content .overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 999;
+  background-color: rgba(0, 0, 0, 0.3137254902);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+body.ver-produto-content .overlay #carousel .carousel-item img {
+  width: 500px;
+  height: 500px;
+  object-fit: cover;
+}
+
 .painel-admin-content .icon-wrapper {
   height: fit-content;
   width: fit-content;
@@ -45,6 +63,14 @@ body.listar-produtos-content table td.desc {
 }
 body.listar-produtos-content table th, body.listar-produtos-content table td {
   vertical-align: middle;
+}
+body.listar-produtos-content table td.actions div {
+  display: flex;
+  gap: 5px;
+}
+body.listar-produtos-content table td.actions div .btn img {
+  width: 16px;
+  height: 16px;
 }
 
 /*# sourceMappingURL=style.css.map */

@@ -12,8 +12,6 @@ if (!isset($_SESSION['admin_logado']) || $_SESSION['admin_logado'] == false ) {
 
 require_once('../conexao/conexao.php');
 
-$mensagem = '';
-
 if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
     $id = $_GET['id'];
     try {

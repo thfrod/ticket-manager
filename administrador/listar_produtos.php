@@ -5,7 +5,7 @@ require_once("../shared/head.php");
 
 session_start();
 
-if (!isset($_SESSION['admin_logado']) || $_SESSION['admin_logado'] == false ) {
+if (!isset($_SESSION['admin_logado']) || $_SESSION['admin_logado'] == false) {
     header('Location: login.php');
     exit();
 }
@@ -59,10 +59,11 @@ try {
                             <?php echo $produto['PRODUTO_NOME']; ?>
                         </td>
                         <td class="text-center desc">
-                            <?php 
-                                $descricao = $produto['PRODUTO_DESC'];
-                                if(strlen($descricao) > 60) $descricao = substr($descricao, 0, 60).'...';
-                                echo $descricao; 
+                            <?php
+                            $descricao = $produto['PRODUTO_DESC'];
+                            if (strlen($descricao) > 60)
+                                $descricao = substr($descricao, 0, 60) . '...';
+                            echo $descricao;
                             ?>
                         </td>
                         <td class="text-center">
@@ -82,14 +83,20 @@ try {
                         <td class="text-center">
                             <?php echo $produto['PRODUTO_ATIVO'] ? 'Ativo' : 'Inativo'; ?>
                         </td>
-                        <td class="text-center">
-                            <a href="editar_produto.php?id=<?php echo $produto['PRODUTO_ID']; ?>" class="btn btn-primary">
-
-                                <img src="../assets/imgs/icons/edit.svg" alt="">
-                            </a>
-                            <a href="excluir_produto.php?id=<?php echo $produto['PRODUTO_ID']; ?>" class="btn btn-danger">
-                                <img src="../assets/imgs/icons/trash.svg" alt="">
-                            </a>
+                        <td class="text-center actions">
+                            <div>
+                                <a href="ver_produto.php?id=<?php echo $produto['PRODUTO_ID']; ?>" class="btn btn-primary">
+                                    <img src="../assets/imgs/icons/eye.svg" alt="">
+    
+                                </a>
+                                <a href="editar_produto.php?id=<?php echo $produto['PRODUTO_ID']; ?>" class="btn btn-primary">
+    
+                                    <img src="../assets/imgs/icons/edit.svg" alt="">
+                                </a>
+                                <a href="excluir_produto.php?id=<?php echo $produto['PRODUTO_ID']; ?>" class="btn btn-danger">
+                                    <img src="../assets/imgs/icons/trash.svg" alt="">
+                                </a>
+                            </div>
                         </td>
                     </tr>
                 <?php endforeach; ?>

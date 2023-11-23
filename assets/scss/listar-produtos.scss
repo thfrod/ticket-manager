@@ -7,5 +7,18 @@ body.listar-produtos-content {
     th, td{
       vertical-align: middle;
     }
+
+    td.actions {
+      div {
+        display: flex;
+        gap: 5px;
+        .btn {
+          img {
+            width: 16px;
+            height: 16px;
+          }
+        }
+      }
+    }
   }
 }
