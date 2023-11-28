@@ -12,15 +12,18 @@ if (!isset($_SESSION['admin_logado']) || $_SESSION['admin_logado'] == false) {
 
 require_once('../conexao/conexao.php');
 
-$array = [' https://i.imgur.com/gXpxfvy.jpg', 'https://i.imgur.com/g5ZXHRr.jpg', 'https://i.imgur.com/71z2yaO.jpg'];
-
 if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
     $id = $_GET['id'];
     try {
-        $stmt = $pdo->prepare("SELECT * FROM PRODUTO WHERE PRODUTO_ID = :id");
+        $stmt = $pdo->prepare("SELECT p.PRODUTO_ID,p.PRODUTO_NOME, p.PRODUTO_DESC, p.PRODUTO_PRECO, p.PRODUTO_DESCONTO, p.PRODUTO_ATIVO, pi.IMAGEM_URL, c.CATEGORIA_NOME, pe.PRODUTO_QTD from PRODUTO p inner join PRODUTO_IMAGEM pi on p.PRODUTO_ID = pi.PRODUTO_ID inner join CATEGORIA c on p.CATEGORIA_ID = c.CATEGORIA_ID left outer join PRODUTO_ESTOQUE pe on p.PRODUTO_ID = pe.PRODUTO_ID WHERE p.PRODUTO_ID = :id");
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
-        $produto = $stmt->fetch(PDO::FETCH_ASSOC); //Recupera todos os registros retornados pela consulta SQL e os armazena na variável $produtos como um array associativo, onde as chaves do array são os nomes das colunas da tabela PRODUTOS
+        $produto = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $stmtImgs = $pdo->prepare("SELECT IMAGEM_URL FROM PRODUTO_IMAGEM WHERE PRODUTO_ID = :id");
+        $stmtImgs->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmtImgs->execute();
+        $imgs = $stmtImgs->fetchAll(PDO::FETCH_ASSOC);
 
     } catch (PDOException $e) {
         header("Location:listar_produtos.php?error=Erro ao buscar produto");
@@ -31,8 +34,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
 ?>
 
 <body class="ver-produto-content d-flex">
-    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="../node_modules/@glidejs/glide/dist/css/glide.core.min.css">
+    <link rel="stylesheet" href="../node_modules/@glidejs/glide/dist/css/glide.theme.min.css">
+
+
     <?php require("../shared/aside.php") ?>
 
     <div class="container my-3">
@@ -48,37 +53,92 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
                     produto</a>
             </div>
         </div>
-        <button class="btn btn-primary btn-ver-imagens">
-            <span class="material-symbols-outlined text-white">image</span>
-            <span>
-                Ver imagens
-            </span>
-        </button>
+        <form action="" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="id" value="<?php echo $produto['PRODUTO_ID']; ?>">
 
-        <div class="overlay">
-            <div id="carousel" class="carousel slide">
-                <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#carousel" data-bs-slide-to="0" class="active" aria-current="true"
-                        aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                    <button type="button" data-bs-target="#carousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                </div>
-                <div class="carousel-inner">
-                    <?php foreach ($array as $img): ?>
-                        <div class="carousel-item <?php echo ($img == $array[0] ? 'active' : '') ?>">
-                            <img src="<?php echo $img ?>" class="d-block w-100" alt="...">
-                        </div>
+            <div class="form-floating  mb-3">
+                <input class="form-control" type="text" name="nome" id="nome" required placeholder="Nome"
+                    value="<?php echo$produto['PRODUTO_NOME']; ?>" disabled>
+                <label for="nome">Nome do produto</label>
+
+            </div>
+
+            <div class="form-floating mb-3">
+                <input disabled class="form-control" type="text" name="descricao" id="descricao" required placeholder="Descrição"
+                    value="<?php echo $produto['PRODUTO_DESC']; ?>">
+                    <label for="descricao">Descrição</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <select class="form-control" name="status" id="status" required placeholder="Status">
+                    <option selected>
+                        <?php echo $produto['PRODUTO_ATIVO'] == 1 ? 'Ativo' : 'Inativo' ?>
+                    </option>
+                </select>
+                <label for="status">Status</label>
+
+            </div>
+
+            <div class="form-floating mb-3">
+                <select class="form-control" name="categoria" id="categoria" disabled>
+                    <option selected disabled>
+                        <?php echo $produto['CATEGORIA_NOME'] ?>
+                    </option>
+                </select>
+                <label for="categoria">Categoria</label>
+
+            </div>
+
+            <div class="form-floating mb-3">
+                <input disabled class="form-control" type="number" name="preco" id="preco" step="0.01" required
+                    placeholder="Preço" value="<?php echo $produto['PRODUTO_PRECO']; ?>">
+                <label for="preco">Preço</label>
+
+            </div>
+
+            <div class="form-floating mb-3">
+                <input disabled class="form-control" type="number" name="desconto" id="desconto" step="0.01" required
+                    placeholder="Desconto" value="<?php echo $produto['PRODUTO_DESCONTO']; ?>">
+                <label for="desconto">Desconto</label>
+                    
+            </div>
+
+        </form>
+        <h3>Imagens</h3>
+        <div class="glide">
+            <div class="glide__track" data-glide-el="track">
+                <ul class="glide__slides">
+                    <?php foreach ($imgs as $img): ?>
+                        <li class="glide__slide">
+                            <img src="<?php echo $img['IMAGEM_URL'] ?>" class="" alt="...">
+                        </li>
                     <?php endforeach; ?>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
+                </ul>
+            </div>
+            <div class="glide__arrows" data-glide-el="controls">
+                <button class="glide__arrow glide__arrow--left" data-glide-dir="<">
+                    <span class="material-symbols-outlined">
+                        arrow_back
+                    </span>
                 </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
+                <button class="glide__arrow glide__arrow--right" data-glide-dir=">">
+                    <span class="material-symbols-outlined">
+                        arrow_forward
+                    </span>
                 </button>
             </div>
         </div>
     </div>
+    <script src="../node_modules/@glidejs/glide/dist/glide.min.js"></script>
+
+    <script>
+
+        new Glide('.glide', {
+            type: "carousel",
+            startAt: 0,
+            perView: 4,
+            gap: 10,
+            autoplay: 2000
+        }).mount()
+    </script>
 </body>
