@@ -15,7 +15,16 @@ require_once('../conexao/conexao.php');
 if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
     $id = $_GET['id'];
     try {
-        $stmt = $pdo->prepare("SELECT p.PRODUTO_ID,p.PRODUTO_NOME, p.PRODUTO_DESC, p.PRODUTO_PRECO, p.PRODUTO_DESCONTO, p.PRODUTO_ATIVO, pi.IMAGEM_URL, c.CATEGORIA_NOME, pe.PRODUTO_QTD from PRODUTO p inner join PRODUTO_IMAGEM pi on p.PRODUTO_ID = pi.PRODUTO_ID inner join CATEGORIA c on p.CATEGORIA_ID = c.CATEGORIA_ID left outer join PRODUTO_ESTOQUE pe on p.PRODUTO_ID = pe.PRODUTO_ID WHERE p.PRODUTO_ID = :id");
+        $stmt = $pdo->prepare(" SELECT p.PRODUTO_ID,p.PRODUTO_NOME, p.PRODUTO_DESC, p.PRODUTO_PRECO, p.PRODUTO_DESCONTO, 
+                                        p.PRODUTO_ATIVO, pi.IMAGEM_URL, c.CATEGORIA_NOME, pe.PRODUTO_QTD
+                                from PRODUTO p 
+                                inner join PRODUTO_IMAGEM pi 
+                                on p.PRODUTO_ID = pi.PRODUTO_ID 
+                                inner join CATEGORIA c 
+                                on p.CATEGORIA_ID = c.CATEGORIA_ID 
+                                left outer join PRODUTO_ESTOQUE pe 
+                                on p.PRODUTO_ID = pe.PRODUTO_ID 
+                                WHERE p.PRODUTO_ID = :id");
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
         $produto = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -100,6 +109,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
                 <input disabled class="form-control" type="number" name="desconto" id="desconto" step="0.01" required
                     placeholder="Desconto" value="<?php echo $produto['PRODUTO_DESCONTO']; ?>">
                 <label for="desconto">Desconto</label>
+                    
+            </div>
+
+            <div class="form-floating mb-3">
+                <input disabled class="form-control" type="number" name="estoque" id="estoque" step="0.01" required
+                    placeholder="Estoque" value="<?php echo $produto['PRODUTO_QTD'] ? $produto['PRODUTO_QTD'] : 0; ?>">
+                <label for="desconto">Estoque</label>
                     
             </div>
 
