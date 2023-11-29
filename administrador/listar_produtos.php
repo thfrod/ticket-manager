@@ -13,7 +13,20 @@ if (!isset($_SESSION['admin_logado']) || $_SESSION['admin_logado'] == false) {
 require_once('../conexao/conexao.php');
 
 try {
-    $stmt = $pdo->prepare("SELECT p.PRODUTO_ID,p.PRODUTO_NOME, p.PRODUTO_DESC, p.PRODUTO_PRECO, p.PRODUTO_DESCONTO, p.PRODUTO_ATIVO, pi.IMAGEM_URL, c.CATEGORIA_NOME, pe.PRODUTO_QTD from PRODUTO p inner join PRODUTO_IMAGEM pi on p.PRODUTO_ID = pi.PRODUTO_ID inner join CATEGORIA c on p.CATEGORIA_ID = c.CATEGORIA_ID left outer join PRODUTO_ESTOQUE pe on p.PRODUTO_ID = pe.PRODUTO_ID order by p.PRODUTO_NOME, p.PRODUTO_ATIVO DESC");
+    $stmt = $pdo->prepare(  "SELECT p.PRODUTO_ID, p.PRODUTO_NOME, p.PRODUTO_DESC, p.PRODUTO_PRECO, 
+                                    p.PRODUTO_DESCONTO, p.PRODUTO_ATIVO, pi.PRIMEIRA_IMAGEM, c.CATEGORIA_NOME, pe.PRODUTO_QTD
+                            from PRODUTO p
+                            inner join 
+                            (
+                                SELECT PRODUTO_ID, MIN(IMAGEM_ORDEM), MIN(IMAGEM_URL) as PRIMEIRA_IMAGEM
+                                FROM PRODUTO_IMAGEM
+                                GROUP BY PRODUTO_ID
+                            ) as pi ON p.PRODUTO_ID = pi.PRODUTO_ID
+                            inner join CATEGORIA c 
+                            on p.CATEGORIA_ID = c.CATEGORIA_ID 
+                            left outer join PRODUTO_ESTOQUE pe 
+                            on p.PRODUTO_ID = pe.PRODUTO_ID 
+                            order by p.PRODUTO_NOME, p.PRODUTO_ATIVO DESC;");
     $stmt->execute();
     $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC); //Recupera todos os registros retornados pela consulta SQL e os armazena na variável $produtos como um array associativo, onde as chaves do array são os nomes das colunas da tabela PRODUTOS
 } catch (PDOException $e) {
@@ -33,6 +46,8 @@ try {
             </div>
         </div>
 
+        <?php // var_dump($produtos); ?>
+
         <table class="table table-striped table-bordered">
 
             <thead>
@@ -50,10 +65,12 @@ try {
             </thead>
             <tbody>
 
+               
+
                 <?php foreach ($produtos as $produto): ?>
                     <tr>
                         <td class="text-center">
-                            <img src="<?php echo $produto['IMAGEM_URL']; ?>" alt="Imagem do Produto" width="50">
+                            <img src="<?php echo $produto['PRIMEIRA_IMAGEM']; ?>" alt="Imagem do Produto" width="50">
                         </td>
                         <td class="text-center">
                             <?php echo $produto['PRODUTO_NOME']; ?>
