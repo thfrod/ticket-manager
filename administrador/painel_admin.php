@@ -166,6 +166,7 @@ try {
                     <th scope="col" class="text-center">Imagem</th>
                     <th scope="col" class="text-center">Nome</th>
                     <th scope="col" class="text-center">Unidades vendidas</th>
+                    <th scope="col" class="text-center">Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -181,6 +182,13 @@ try {
                         </td>
                         <td class="text-center">
                             <?php echo $produto['TOTAL_VENDIDO']?>
+                        </td>
+                        <td class="text-center actions">
+                            <div>
+                                <a href="ver_produto.php?id=<?php echo $produto['PRODUTO_ID']; ?>" class="btn btn-primary">
+                                    <img src="../assets/imgs/icons/eye.svg" alt="">
+                                </a>
+                            </div>
                         </td>
                     </tr>
                 <?php endforeach; ?>
