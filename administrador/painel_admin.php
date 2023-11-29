@@ -168,10 +168,14 @@ try {
                     
                     <?php //var_dump($produtosMaisVendidos); 
                     $i = 1;
+                    $prevSoldItens = 0;
                     foreach ($produtosMaisVendidos as $produto): ?>
                         <tr>
                             <td class="text-center">
-                                <?php echo "#" . $i ?>
+                                <?php 
+                                    if($prevSoldItens == $produto['TOTAL_VENDIDO']) $i--;
+                                    echo "#" . $i;
+                                ?>
                             </td>
                             <td class="text-center">
                                 <img src="<?php echo $produto['PRIMEIRA_IMAGEM']; ?>" alt="Imagem do Produto" width="50">
@@ -192,6 +196,7 @@ try {
                         </tr>
                     <?php 
                         $i++;
+                        $prevSoldItens = $produto['TOTAL_VENDIDO'];
                         endforeach; ?>
                 </tbody>
             </table>
