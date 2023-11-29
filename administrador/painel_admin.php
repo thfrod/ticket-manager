@@ -79,75 +79,130 @@ try {
     <div class="container my-3">
         <h2>Painel administrador</h2><br>
 
-        <div class="card" style="width: 18rem;">
-            <div class="card-body d-flex gap-4">
-                <div
-                    class="icon-wrapper rounded-circle bg-primary p-3 d-flex justify-content-center align-items-center">
-                    <span class="material-symbols-outlined text-white">shopping_cart</span>
-                </div>
+        <div class="d-flex flex-row justify-content-between">
 
-                <div>
-                    <h6 class="card-subtitle mb-2 text-body-secondary">Produtos ativos em estoque</h6>
-                    <h5 class="card-title">
-                        <?php echo $dataProdutosAtivos[0]['QTD_PRODUTOS']; ?>
-                    </h5>
-                </div>
-            </div>
-        </div><br>
+            <div class="card" style="width: 18rem;">
+                <div class="card-body d-flex gap-4">
+                    <div
+                        class="icon-wrapper rounded-circle bg-primary p-3 d-flex justify-content-center align-items-center">
+                        <span class="material-symbols-outlined text-white">monetization_on</span>
+                    </div>
 
-        <div class="card" style="width: 18rem;">
-            <div class="card-body d-flex gap-4">
-                <div
-                    class="icon-wrapper rounded-circle bg-primary p-3 d-flex justify-content-center align-items-center">
-                    <span class="material-symbols-outlined text-white">shopping_cart</span>
-                </div>
-
-                <div>
-                    <h6 class="card-subtitle mb-2 text-body-secondary">Pedidos realizados</h6>
-                    <h5 class="card-title">
-                        <?php echo $dataPedidos[0]['QTD_PEDIDOS']; ?>
-                    </h5>
+                    <div>
+                        <h6 class="card-subtitle mb-2 text-body-secondary">Total de<br>faturamento</h6>
+                        <h5 class="card-title">
+                            <?php 
+                                $valor = $dataTotalFaturamento[0]['TOTAL_FATURAMENTO'];
+                                echo "R$ " . number_format($valor,2,",",".") 
+                            ?>
+                        </h5>
+                    </div>
                 </div>
             </div>
-        </div><br>
 
-        <div class="card" style="width: 18rem;">
-            <div class="card-body d-flex gap-4">
-                <div
-                    class="icon-wrapper rounded-circle bg-primary p-3 d-flex justify-content-center align-items-center">
-                    <span class="material-symbols-outlined text-white">shopping_cart</span>
-                </div>
+            <div class="card" style="width: 18rem;">
+                <div class="card-body d-flex gap-4">
+                    <div
+                        class="icon-wrapper rounded-circle bg-primary p-3 d-flex justify-content-center align-items-center">
+                        <span class="material-symbols-outlined text-white">shopping_cart</span>
+                    </div>
 
-                <div>
-                    <h6 class="card-subtitle mb-2 text-body-secondary">Total de tickets vendidos</h6>
-                    <h5 class="card-title">
-                        <?php echo $dataTotalTicketsVendidos[0]['TOTAL_TICKETS_VENDIDOS']; ?>
-                    </h5>
-                </div>
-            </div>
-        </div><br>
-
-        <div class="card" style="width: 18rem;">
-            <div class="card-body d-flex gap-4">
-                <div
-                    class="icon-wrapper rounded-circle bg-primary p-3 d-flex justify-content-center align-items-center">
-                    <span class="material-symbols-outlined text-white">shopping_cart</span>
-                </div>
-
-                <div>
-                    <h6 class="card-subtitle mb-2 text-body-secondary">Faturamento total</h6>
-                    <h5 class="card-title">
-                        <?php echo "R$ " . $dataTotalFaturamento[0]['TOTAL_FATURAMENTO']; ?>
-                    </h5>
+                    <div>
+                        <h6 class="card-subtitle mb-2 text-body-secondary">Pedidos<br>realizados</h6>
+                        <h5 class="card-title">
+                            <?php echo $dataPedidos[0]['QTD_PEDIDOS']; ?>
+                        </h5>
+                    </div>
                 </div>
             </div>
-        </div><br>
 
-        <div class="card" style="width: 18rem;">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body d-flex gap-4">
+                    <div
+                        class="icon-wrapper rounded-circle bg-primary p-3 d-flex justify-content-center align-items-center">
+                        <span class="material-symbols-outlined text-white">confirmation_number</span>
+                    </div>
+
+                    <div>
+                        <h6 class="card-subtitle mb-2 text-body-secondary">Total de tickets vendidos</h6>
+                        <h5 class="card-title">
+                            <?php echo $dataTotalTicketsVendidos[0]['TOTAL_TICKETS_VENDIDOS']; ?>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="width: 18rem;">
+                <div class="card-body d-flex gap-4">
+                    <div
+                        class="icon-wrapper rounded-circle bg-primary p-3 d-flex justify-content-center align-items-center">
+                        <span class="material-symbols-outlined text-white">inventory_2</span>
+                    </div>
+
+                    <div>
+                        <h6 class="card-subtitle mb-2 text-body-secondary">Produtos ativos cadastrados</h6>
+                        <h5 class="card-title">
+                            <?php echo $dataProdutosAtivos[0]['QTD_PRODUTOS']; ?>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <br>
+
+        
+        <h5 class="card-subtitle mb-3 text-body-secondary">Produtos mais vendidos</h5>
+        
+            <table class="table table-striped table-bordered">
+                <!-- <thead>
+                    <tr>
+                        <th scope="col" class="text-center">Imagem</th>
+                        <th scope="col" class="text-center">Nome</th>
+                        <th scope="col" class="text-center">Unidades vendidas</th>
+                        <th scope="col" class="text-center">Ações</th>
+                    </tr>
+                </thead> -->
+                <tbody>
+                    
+                    <?php //var_dump($produtosMaisVendidos); 
+                    $i = 1;
+                    foreach ($produtosMaisVendidos as $produto): ?>
+                        <tr>
+                            <td class="text-center">
+                                <?php echo "#" . $i ?>
+                            </td>
+                            <td class="text-center">
+                                <img src="<?php echo $produto['PRIMEIRA_IMAGEM']; ?>" alt="Imagem do Produto" width="50">
+                            </td>
+                            <td class="text-center">
+                                <?php echo $produto['PRODUTO_NOME']; ?>
+                            </td>
+                            <td class="text-center">
+                                <?php echo $produto['TOTAL_VENDIDO'] . " vendido(s)"?>
+                            </td>
+                            <td class="text-center actions">
+                                <div>
+                                    <a href="ver_produto.php?id=<?php echo $produto['PRODUTO_ID']; ?>" class="btn btn-primary">
+                                        <img src="../assets/imgs/icons/eye.svg" alt="">
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php 
+                        $i++;
+                        endforeach; ?>
+                </tbody>
+            </table>
+
+
+
+        <!-- <div class="card" style="width: 18rem;">
             <div class="card-body d-flex gap-4">
                 <div
                     class="icon-wrapper rounded-circle bg-primary p-3 d-flex justify-content-center align-items-center">
-                    <span class="material-symbols-outlined text-white">shopping_cart</span>
+                    <span class="material-symbols-outlined text-white">person</span>
                 </div>
 
                 <div>
@@ -157,45 +212,8 @@ try {
                     </h5>
                 </div>
             </div>
-        </div>
-        <br><br>
-        <h6 class="card-subtitle mb-2 text-body-secondary">Produtos mais vendidos</h6>
-
-        <table class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th scope="col" class="text-center">Imagem</th>
-                    <th scope="col" class="text-center">Nome</th>
-                    <th scope="col" class="text-center">Unidades vendidas</th>
-                    <th scope="col" class="text-center">Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                
-                <?php //var_dump($produtosMaisVendidos); 
-                foreach ($produtosMaisVendidos as $produto): ?>
-                    <tr>
-                        <td class="text-center">
-                            <img src="<?php echo $produto['PRIMEIRA_IMAGEM']; ?>" alt="Imagem do Produto" width="50">
-                        </td>
-                        <td class="text-center">
-                            <?php echo $produto['PRODUTO_NOME']; ?>
-                        </td>
-                        <td class="text-center">
-                            <?php echo $produto['TOTAL_VENDIDO']?>
-                        </td>
-                        <td class="text-center actions">
-                            <div>
-                                <a href="ver_produto.php?id=<?php echo $produto['PRODUTO_ID']; ?>" class="btn btn-primary">
-                                    <img src="../assets/imgs/icons/eye.svg" alt="">
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-        <br><br><br>
+        </div> -->
+        
 
 
     </div>

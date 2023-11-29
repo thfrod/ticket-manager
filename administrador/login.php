@@ -7,6 +7,8 @@ require_once("../shared/head.php");
 
     <form action="processa_login.php" method="post" class="container my-3">
 
+        <img src="../assets/imgs/logo.svg" alt="" class="menu-logo">
+
         <h2>Login do Administrador</h2>
 
         <div class="input-group mb-3">

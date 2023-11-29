@@ -33,6 +33,11 @@ html {
   max-width: 500px;
   text-align: center;
 }
+.login-content .menu-logo {
+  max-width: 320px;
+  margin-bottom: -60px;
+  margin-top: -60px;
+}
 
 body.ver-produto-content .btn-ver-imagens span {
   vertical-align: middle;
@@ -52,6 +57,9 @@ body.ver-produto-content .glide .glide__arrows button {
 .painel-admin-content .icon-wrapper {
   height: fit-content;
   width: fit-content;
+}
+.painel-admin-content table td {
+  vertical-align: middle;
 }
 
 body.listar-produtos-content table th.desc,
