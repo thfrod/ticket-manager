@@ -40,11 +40,15 @@ try {
     $dataTotalUsuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     // PRODUTOS MAIS VENDIDOS
-    $stmt = $pdo->prepare(  "SELECT ped.PRODUTO_ID, GROUP_CONCAT(PRODUTO_IMAGEM.IMAGEM_URL), prod.PRODUTO_NOME, SUM(ped.ITEM_QTD) AS 'TOTAL_VENDIDO' 
+    $stmt = $pdo->prepare(  "SELECT ped.PRODUTO_ID, pi.PRIMEIRA_IMAGEM, prod.PRODUTO_NOME, SUM(ped.ITEM_QTD) AS 'TOTAL_VENDIDO' 
                             FROM PEDIDO_ITEM ped INNER JOIN PRODUTO prod
                             ON ped.PRODUTO_ID = prod.PRODUTO_ID
-                            INNER JOIN PRODUTO_IMAGEM
-                            ON ped.PRODUTO_ID = PRODUTO_IMAGEM.PRODUTO_ID
+                            INNER JOIN
+                            (
+                                SELECT PRODUTO_ID, MIN(IMAGEM_ORDEM), MIN(IMAGEM_URL) as PRIMEIRA_IMAGEM
+                                FROM PRODUTO_IMAGEM
+                                GROUP BY PRODUTO_ID    
+                            ) pi ON ped.PRODUTO_ID = pi.PRODUTO_ID
                             GROUP BY PRODUTO_ID 
                             ORDER BY `TOTAL_VENDIDO` DESC;");
     $stmt->execute();
@@ -170,7 +174,7 @@ try {
                 foreach ($produtosMaisVendidos as $produto): ?>
                     <tr>
                         <td class="text-center">
-                            <img src="<?php echo strtok($produto['GROUP_CONCAT(PRODUTO_IMAGEM.IMAGEM_URL)'], ','); ?>" alt="Imagem do Produto" width="50">
+                            <img src="<?php echo $produto['PRIMEIRA_IMAGEM']; ?>" alt="Imagem do Produto" width="50">
                         </td>
                         <td class="text-center">
                             <?php echo $produto['PRODUTO_NOME']; ?>
