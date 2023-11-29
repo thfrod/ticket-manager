@@ -49,6 +49,7 @@ try {
                                 FROM PRODUTO_IMAGEM
                                 GROUP BY PRODUTO_ID    
                             ) pi ON ped.PRODUTO_ID = pi.PRODUTO_ID
+                            WHERE ped.ITEM_QTD > 0
                             GROUP BY PRODUTO_ID 
                             ORDER BY `TOTAL_VENDIDO` DESC;");
     $stmt->execute();
