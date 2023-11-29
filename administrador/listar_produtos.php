@@ -26,7 +26,7 @@ try {
                             on p.CATEGORIA_ID = c.CATEGORIA_ID 
                             left outer join PRODUTO_ESTOQUE pe 
                             on p.PRODUTO_ID = pe.PRODUTO_ID 
-                            order by p.PRODUTO_NOME, p.PRODUTO_ATIVO DESC;");
+                            order by p.PRODUTO_NOME;");
     $stmt->execute();
     $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC); //Recupera todos os registros retornados pela consulta SQL e os armazena na variável $produtos como um array associativo, onde as chaves do array são os nomes das colunas da tabela PRODUTOS
 } catch (PDOException $e) {

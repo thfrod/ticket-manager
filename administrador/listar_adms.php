@@ -13,7 +13,7 @@ if (!isset($_SESSION['admin_logado']) || $_SESSION['admin_logado'] == false ) {
 require_once('../conexao/conexao.php');
 
 try {
-    $stmt = $pdo->prepare("SELECT ADM_ID, ADM_NOME, ADM_EMAIL,ADM_ATIVO FROM ADMINISTRADOR ORDER BY ADM_ATIVO DESC");
+    $stmt = $pdo->prepare("SELECT ADM_ID, ADM_NOME, ADM_EMAIL,ADM_ATIVO FROM ADMINISTRADOR ORDER BY ADM_ATIVO DESC, ADM_NOME ASC");
     $stmt->execute();
     $adms = $stmt->fetchAll(PDO::FETCH_ASSOC); //Recupera todos os registros retornados pela consulta SQL e os armazena na variável $produtos como um array associativo, onde as chaves do array são os nomes das colunas da tabela PRODUTOS
 } catch (PDOException $e) {
