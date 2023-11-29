@@ -18,7 +18,7 @@ try {
                             from PRODUTO p
                             inner join 
                             (
-                                SELECT PRODUTO_ID, MIN(IMAGEM_ORDEM), MIN(IMAGEM_URL) as PRIMEIRA_IMAGEM
+                                SELECT PRODUTO_ID, MIN(IMAGEM_URL) as PRIMEIRA_IMAGEM
                                 FROM PRODUTO_IMAGEM
                                 GROUP BY PRODUTO_ID
                             ) as pi ON p.PRODUTO_ID = pi.PRODUTO_ID
