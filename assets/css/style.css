@@ -53,6 +53,9 @@ body.ver-produto-content .glide .glide__arrows button {
   border-radius: 50%;
   background-color: rgb(13, 110, 253);
 }
+body.ver-produto-content textarea.textarea {
+  height: auto;
+}
 
 .painel-admin-content .icon-wrapper {
   height: fit-content;

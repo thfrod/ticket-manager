@@ -6,7 +6,7 @@ require_once("../shared/head.php");
 
 session_start();
 require_once('../conexao/conexao.php');
-if (!isset($_SESSION['admin_logado']) || $_SESSION['admin_logado'] == false ) { //se não está definido a variável global admin_logado redireciona para tela de login
+if (!isset($_SESSION['admin_logado']) || $_SESSION['admin_logado'] == false) { //se não está definido a variável global admin_logado redireciona para tela de login
     header("Location:login.php"); // redireciona para tela de login
     exit(); // impede que as próximas linhas sejam executadas
 }
@@ -46,9 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // se o método usado for POST execu
         header("Location:listar_categorias.php?success=Categoria atualizada com successo");
     } catch (PDOException $e) {
         header("Location:listar_categorias.php?error=Erro ao editar categoria");
-
-    }
-    ;
+    };
 }
 
 
@@ -67,13 +65,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // se o método usado for POST execu
             <input type="hidden" name="id" value="<?php echo $categoria['CATEGORIA_ID']; ?>">
 
             <div class="input-group mb-3">
-                <input class="form-control" type="text" name="nome" id="nome" required placeholder="Nome"
-                    value="<?php echo $categoria['CATEGORIA_NOME']; ?>">
+                <input class="form-control" type="text" name="nome" id="nome" required placeholder="Nome" value="<?php echo $categoria['CATEGORIA_NOME']; ?>">
             </div>
 
             <div class="input-group mb-3">
-                <input class="form-control" type="text" name="descricao" id="descricao" required
-                    value="<?php echo $categoria['CATEGORIA_DESC']; ?>" placeholder="Descrição">
+                <input class="form-control" type="text" name="descricao" id="descricao" required value="<?php echo $categoria['CATEGORIA_DESC']; ?>" placeholder="Descrição">
             </div>
 
             <div class="input-group mb-3">
@@ -87,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // se o método usado for POST execu
                 </select>
             </div>
 
-            <input type="submit" value="Cadastrar" class="btn btn-success">
+            <input type="submit" value="Atualizar" class="btn btn-success">
 
         </form>
     </div>

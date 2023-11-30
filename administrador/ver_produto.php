@@ -33,7 +33,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
         $stmtImgs->bindParam(':id', $id, PDO::PARAM_INT);
         $stmtImgs->execute();
         $imgs = $stmtImgs->fetchAll(PDO::FETCH_ASSOC);
-
     } catch (PDOException $e) {
         header("Location:listar_produtos.php?error=Erro ao buscar produto");
     }
@@ -66,20 +65,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
             <input type="hidden" name="id" value="<?php echo $produto['PRODUTO_ID']; ?>">
 
             <div class="form-floating  mb-3">
-                <input class="form-control" type="text" name="nome" id="nome" required placeholder="Nome"
-                    value="<?php echo$produto['PRODUTO_NOME']; ?>" disabled>
+                <input class="form-control" type="text" name="nome" id="nome" required placeholder="Nome" value="<?php echo $produto['PRODUTO_NOME']; ?>" disabled>
                 <label for="nome">Nome do produto</label>
-
             </div>
 
             <div class="form-floating mb-3">
-                <input disabled class="form-control" type="text" name="descricao" id="descricao" required placeholder="Descrição"
-                    value="<?php echo $produto['PRODUTO_DESC']; ?>">
-                    <label for="descricao">Descrição</label>
+                <textarea class="form-control textarea" placeholder="Leave a comment here" id="descricao" rows="10" disabled><?php echo $produto['PRODUTO_DESC']; ?></textarea>
+                <label for="descricao">Descrição</label>
             </div>
 
             <div class="form-floating mb-3">
-                <select class="form-control" name="status" id="status" required placeholder="Status">
+                <select class="form-control" name="status" id="status" required placeholder="Status" disabled>
                     <option selected>
                         <?php echo $produto['PRODUTO_ATIVO'] == 1 ? 'Ativo' : 'Inativo' ?>
                     </option>
@@ -99,24 +95,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
             </div>
 
             <div class="form-floating mb-3">
-                <input disabled class="form-control" type="number" name="preco" id="preco" step="0.01" required
-                    placeholder="Preço" value="<?php echo $produto['PRODUTO_PRECO']; ?>">
+                <input disabled class="form-control" type="number" name="preco" id="preco" step="0.01" required placeholder="Preço" value="<?php echo $produto['PRODUTO_PRECO']; ?>">
                 <label for="preco">Preço</label>
 
             </div>
 
             <div class="form-floating mb-3">
-                <input disabled class="form-control" type="number" name="desconto" id="desconto" step="0.01" required
-                    placeholder="Desconto" value="<?php echo $produto['PRODUTO_DESCONTO']; ?>">
+                <input disabled class="form-control" type="number" name="desconto" id="desconto" step="0.01" required placeholder="Desconto" value="<?php echo $produto['PRODUTO_DESCONTO']; ?>">
                 <label for="desconto">Desconto</label>
-                    
+
             </div>
 
             <div class="form-floating mb-3">
-                <input disabled class="form-control" type="number" name="estoque" id="estoque" step="0.01" required
-                    placeholder="Estoque" value="<?php echo $produto['PRODUTO_QTD'] ? $produto['PRODUTO_QTD'] : 0; ?>">
-                <label for="desconto">Estoque</label>
-                    
+                <input disabled class="form-control" type="number" name="estoque" id="estoque" required placeholder="Estoque" value="<?php echo $produto['PRODUTO_QTD'] ? $produto['PRODUTO_QTD'] : 0; ?>">
+                <label for="estoque">Estoque</label>
             </div>
 
         </form>
@@ -124,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
         <div class="glide">
             <div class="glide__track" data-glide-el="track">
                 <ul class="glide__slides">
-                    <?php foreach ($imgs as $img): ?>
+                    <?php foreach ($imgs as $img) : ?>
                         <li class="glide__slide">
                             <img src="<?php echo $img['IMAGEM_URL'] ?>" class="" alt="...">
                         </li>
@@ -148,9 +140,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
     <script src="../node_modules/@glidejs/glide/dist/glide.min.js"></script>
 
     <script>
-
         new Glide('.glide', {
-            type: "carousel",
+            type: "slider",
             startAt: 0,
             perView: 4,
             gap: 10,

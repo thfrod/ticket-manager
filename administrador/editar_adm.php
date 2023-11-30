@@ -6,7 +6,7 @@ require_once("../shared/head.php");
 
 session_start();
 require_once('../conexao/conexao.php');
-if (!isset($_SESSION['admin_logado']) || $_SESSION['admin_logado'] == false ) { //se não está definido a variável global admin_logado redireciona para tela de login
+if (!isset($_SESSION['admin_logado']) || $_SESSION['admin_logado'] == false) { //se não está definido a variável global admin_logado redireciona para tela de login
     header("Location:login.php"); // redireciona para tela de login
     exit(); // impede que as próximas linhas sejam executadas
 }
@@ -46,12 +46,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // se o método usado for POST execu
         $stmt->execute();
 
         header("Location:listar_adms.php?success=Administrador cadastrado com successo");
-
     } catch (PDOException $e) {
         header("Location:listar_adms.php?error=Erro ao cadastrar administrador");
-
-    }
-    ;
+    };
 }
 
 
@@ -62,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // se o método usado for POST execu
 
     <div class="container my-3">
         <div class="d-flex align-items-center justify-content-between mb-3">
-            <h2>Cadastrar Administrador</h2>
+            <h2>Editar Administrador</h2>
             <a href="painel_admin.php" class="btn btn-primary">Voltar ao Painel</a>
         </div>
 
@@ -70,18 +67,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // se o método usado for POST execu
             <input type="hidden" name="id" value="<?php echo $adm['ADM_ID']; ?>">
 
             <div class="input-group mb-3">
-                <input class="form-control" type="text" name="nome" id="nome" required placeholder="Nome"
-                    value="<?php echo $adm['ADM_NOME'] ?>">
+                <input class="form-control" type="text" name="nome" id="nome" required placeholder="Nome" value="<?php echo $adm['ADM_NOME'] ?>">
             </div>
 
             <div class="input-group mb-3">
-                <input class="form-control" type="email" name="email" id="email" required placeholder="Email"
-                    value="<?php echo $adm['ADM_EMAIL'] ?>">
+                <input class="form-control" type="email" name="email" id="email" required placeholder="Email" value="<?php echo $adm['ADM_EMAIL'] ?>">
             </div>
 
             <div class="input-group mb-3">
-                <input class="form-control" type="password" name="senha" id="senha" required placeholder="Senha"
-                    value="<?php echo $adm['ADM_SENHA'] ?>">
+                <input class="form-control" type="password" name="senha" id="senha" required placeholder="Senha" value="<?php echo $adm['ADM_SENHA'] ?>">
             </div>
 
 
@@ -96,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // se o método usado for POST execu
                 </select>
             </div>
 
-            <input type="submit" value="Cadastrar" class="btn btn-success">
+            <input type="submit" value="Atualizar" class="btn btn-success">
         </form>
     </div>
 </body>

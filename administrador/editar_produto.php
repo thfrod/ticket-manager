@@ -6,7 +6,7 @@ require_once("../shared/head.php");
 //uma sessão é iniciada e verifica-se se um administrador está logado. Se não estiver, ele é redirecionado para a página de login.
 session_start();
 
-if (!isset($_SESSION['admin_logado']) || $_SESSION['admin_logado'] == false ) {
+if (!isset($_SESSION['admin_logado']) || $_SESSION['admin_logado'] == false) {
     header('Location: login.php');
     exit();
 }
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $stmt->execute();
             $produto = $stmt->fetch(PDO::FETCH_ASSOC); //$produto é um array associativo que contém os detalhes do produto que foi recuperado do banco de dados. Por exemplo, se a tabela de produtos tem colunas como ID, NOME, DESCRICAO, PRECO, e URL_IMAGEM, então o array $produto terá essas chaves, e você pode acessar os valores correspondentes usando a sintaxe de colchetes, 
 
-            $stmtCategoria = $pdo->prepare("SELECT CATEGORIA_NOME, CATEGORIA_ID FROM CATEGORIA WHERE CATEGORIA_ATIVO = 1");
+            $stmtCategoria = $pdo->prepare("SELECT CATEGORIA_NOME, CATEGORIA_ID FROM CATEGORIA WHERE CATEGORIA_ATIVO = 1 ORDER BY CATEGORIA_NOME ASC");
             $stmtCategoria->execute();
             $categorias = $stmtCategoria->fetchAll(PDO::FETCH_ASSOC);
 
@@ -36,7 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
         } catch (PDOException $e) {
             header("Location:listar_produtos.php?error=Erro ao editar produto");
-
         }
     } else {
         header("Location:listar_produtos.php?error=Erro ao editar produto");
@@ -163,7 +162,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div> -->
             </div>
 
-            <input type="submit" value="Cadastrar" class="btn btn-success">
+            <input type="submit" value="Atualizar" class="btn btn-success">
 
         </form>
     </div>

@@ -1,28 +1,31 @@
 @import "./variables.scss";
 
 body.ver-produto-content {
-    .btn-ver-imagens {
-        span {
-            vertical-align: middle;
-        }
+  .btn-ver-imagens {
+    span {
+      vertical-align: middle;
     }
-    .glide {
-        .glide__slide {
-            img {
-                width: 300px;
-                height: 200px;
-                object-fit: cover;
-                border-radius: 4px;
-                border: 2px solid $azulEscuro;
-            }
-        }
-
-        .glide__arrows {
-            button {
-                border-radius: 50%;
-                background-color:rgb(13,110,253);
-            }
-        }
-
+  }
+  .glide {
+    .glide__slide {
+      img {
+        width: 300px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 4px;
+        border: 2px solid $azulEscuro;
+      }
     }
+
+    .glide__arrows {
+      button {
+        border-radius: 50%;
+        background-color: rgb(13, 110, 253);
+      }
+    }
+  }
+
+  textarea.textarea {
+    height: auto;
+  }
 }

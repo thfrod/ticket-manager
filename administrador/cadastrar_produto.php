@@ -6,14 +6,14 @@ require_once("../shared/head.php");
 
 session_start();
 require_once('../conexao/conexao.php');
-if (!isset($_SESSION['admin_logado']) || $_SESSION['admin_logado'] == false ) { //se não está definido a variável global admin_logado redireciona para tela de login
+if (!isset($_SESSION['admin_logado']) || $_SESSION['admin_logado'] == false) { //se não está definido a variável global admin_logado redireciona para tela de login
     header("Location:login.php"); // redireciona para tela de login
     exit(); // impede que as próximas linhas sejam executadas
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     try {
-        $stmt = $pdo->prepare("SELECT CATEGORIA_NOME, CATEGORIA_ID FROM CATEGORIA WHERE CATEGORIA_ATIVO = 1");
+        $stmt = $pdo->prepare("SELECT CATEGORIA_NOME, CATEGORIA_ID FROM CATEGORIA WHERE CATEGORIA_ATIVO = 1 ORDER BY CATEGORIA_NOME ASC");
         $stmt->execute();
         $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
@@ -59,11 +59,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // se o método usado for POST execu
             $stmt_imagem->execute();
         }
         header("Location:listar_produtos.php?success=Produto cadastrado com successo");
-
     } catch (PDOException $e) {
         header("Location:listar_produtos.php?error=Erro ao cadastrar produto");
-    }
-    ;
+    };
 }
 
 
@@ -84,8 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // se o método usado for POST execu
             </div>
 
             <div class="input-group mb-3">
-                <input class="form-control" type="text" name="descricao" id="descricao" required
-                    placeholder="Descrição">
+                <input class="form-control" type="text" name="descricao" id="descricao" required placeholder="Descrição">
             </div>
 
             <div class="input-group mb-3">
@@ -98,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // se o método usado for POST execu
             <div class="input-group mb-3">
                 <select class="form-control" name="categoria" id="categoria" required>
                     <option value="0" selected disabled>Selecione uma categoria</option>
-                    <?php foreach ($categorias as $categoria): ?>
+                    <?php foreach ($categorias as $categoria) : ?>
                         <option value="<?php echo $categoria['CATEGORIA_ID'] ?>">
                             <?php echo $categoria['CATEGORIA_NOME'] ?>
                         </option>
@@ -107,18 +104,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // se o método usado for POST execu
             </div>
 
             <div class="input-group mb-3">
-                <input class="form-control" type="number" name="preco" id="preco" step="0.01" required
-                    placeholder="Preço">
+                <input class="form-control" type="number" name="preco" id="preco" step="0.01" required placeholder="Preço">
             </div>
 
             <div class="input-group mb-3">
-                <input class="form-control" type="number" name="desconto" id="desconto" step="0.01" required
-                    placeholder="Desconto">
+                <input class="form-control" type="number" name="desconto" id="desconto" step="0.01" required placeholder="Desconto">
             </div>
 
             <div class="input-group mb-3">
-                <input class="form-control" type="number" name="estoque" id="estoque" step="1" required
-                    placeholder="Estoque">
+                <input class="form-control" type="number" name="estoque" id="estoque" step="1" required placeholder="Estoque">
             </div>
 
             <div class="d-flex">
