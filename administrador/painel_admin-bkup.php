@@ -19,26 +19,39 @@ try {
     $stmt->execute();
     $dataProdutosAtivos = $stmt->fetchAll(PDO::FETCH_ASSOC); //Recupera todos os registros retornados pela consulta SQL e os armazena na variável $produtos como um array associativo, onde as chaves do array são os nomes das colunas da tabela PRODUTOS
 
-    // NÚMERO DE CATEGORIAS ATIVAS
-    $stmt = $pdo->prepare("SELECT count(*) as QTD_CATEGORIA FROM CATEGORIA WHERE CATEGORIA_ATIVO = 1");
+    // PEDIDOS REALIZADOS
+    $stmt = $pdo->prepare("SELECT count(*) as QTD_PEDIDOS FROM PEDIDO");
     $stmt->execute();
-    $dataCategoriasAtivas = $stmt->fetchAll(PDO::FETCH_ASSOC); //Recupera todos os registros retornados pela consulta SQL e os armazena na variável $produtos como um array associativo, onde as chaves do array são os nomes das colunas da tabela PRODUTOS
+    $dataPedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // NÚMERO DE ADMINISTRADORES ATIVOS
-    $stmt = $pdo->prepare("SELECT count(*) as QTD_ADMINS FROM ADMINISTRADOR WHERE ADM_ATIVO = 1");
+    // TOTAL DE TICKETS VENDIDOS
+    $stmt = $pdo->prepare("SELECT sum(ITEM_QTD) as TOTAL_TICKETS_VENDIDOS FROM PEDIDO_ITEM");
     $stmt->execute();
-    $dataAdministradoresAtivos = $stmt->fetchAll(PDO::FETCH_ASSOC); //Recupera todos os registros retornados pela consulta SQL e os armazena na variável $produtos como um array associativo, onde as chaves do array são os nomes das colunas da tabela PRODUTOS
+    $dataTotalTicketsVendidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // ÚLTIMOS PRODUTOS ADICIONADOS
-    $stmt = $pdo->prepare(  "SELECT p.PRODUTO_ID, pi.PRIMEIRA_IMAGEM, p.PRODUTO_NOME
-                            FROM PRODUTO p
+    // TOTAL DE FATURAMENTO
+    $stmt = $pdo->prepare("SELECT sum(ITEM_PRECO) as TOTAL_FATURAMENTO FROM PEDIDO_ITEM");
+    $stmt->execute();
+    $dataTotalFaturamento = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // TOTAL DE USUÁRIOS
+    $stmt = $pdo->prepare("SELECT count(*) as TOTAL_USUARIOS FROM USUARIO");
+    $stmt->execute();
+    $dataTotalUsuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // PRODUTOS MAIS VENDIDOS
+    $stmt = $pdo->prepare(  "SELECT ped.PRODUTO_ID, pi.PRIMEIRA_IMAGEM, prod.PRODUTO_NOME, SUM(ped.ITEM_QTD) AS 'TOTAL_VENDIDO' 
+                            FROM PEDIDO_ITEM ped INNER JOIN PRODUTO prod
+                            ON ped.PRODUTO_ID = prod.PRODUTO_ID
                             INNER JOIN
                             (
                                 SELECT PRODUTO_ID, MIN(IMAGEM_ORDEM), MIN(IMAGEM_URL) as PRIMEIRA_IMAGEM
                                 FROM PRODUTO_IMAGEM
-                                GROUP BY PRODUTO_ID
-                            ) pi ON p.PRODUTO_ID = pi.PRODUTO_ID
-                            ORDER BY p.PRODUTO_ID DESC;");
+                                GROUP BY PRODUTO_ID    
+                            ) pi ON ped.PRODUTO_ID = pi.PRODUTO_ID
+                            WHERE ped.ITEM_QTD > 0
+                            GROUP BY PRODUTO_ID 
+                            ORDER BY `TOTAL_VENDIDO` DESC;");
     $stmt->execute();
     $produtosMaisVendidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -72,85 +85,96 @@ try {
                 <div class="card-body d-flex gap-4">
                     <div
                         class="icon-wrapper rounded-circle bg-primary p-3 d-flex justify-content-center align-items-center">
+                        <span class="material-symbols-outlined text-white">monetization_on</span>
+                    </div>
+
+                    <div>
+                        <h6 class="card-subtitle mb-2 text-body-secondary">Total de<br>faturamento</h6>
+                        <h5 class="card-title">
+                            <?php 
+                                $valor = $dataTotalFaturamento[0]['TOTAL_FATURAMENTO'];
+                                echo "R$ " . number_format($valor,2,",",".") 
+                            ?>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="width: 18rem;">
+                <div class="card-body d-flex gap-4">
+                    <div
+                        class="icon-wrapper rounded-circle bg-primary p-3 d-flex justify-content-center align-items-center">
+                        <span class="material-symbols-outlined text-white">shopping_cart</span>
+                    </div>
+
+                    <div>
+                        <h6 class="card-subtitle mb-2 text-body-secondary">Pedidos<br>realizados</h6>
+                        <h5 class="card-title">
+                            <?php echo $dataPedidos[0]['QTD_PEDIDOS']; ?>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="width: 18rem;">
+                <div class="card-body d-flex gap-4">
+                    <div
+                        class="icon-wrapper rounded-circle bg-primary p-3 d-flex justify-content-center align-items-center">
+                        <span class="material-symbols-outlined text-white">confirmation_number</span>
+                    </div>
+
+                    <div>
+                        <h6 class="card-subtitle mb-2 text-body-secondary">Total de tickets vendidos</h6>
+                        <h5 class="card-title">
+                            <?php echo $dataTotalTicketsVendidos[0]['TOTAL_TICKETS_VENDIDOS']; ?>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="width: 18rem;">
+                <div class="card-body d-flex gap-4">
+                    <div
+                        class="icon-wrapper rounded-circle bg-primary p-3 d-flex justify-content-center align-items-center">
                         <span class="material-symbols-outlined text-white">inventory_2</span>
                     </div>
 
                     <div>
-                        <h6 class="card-subtitle mb-2 text-body-secondary">Produtos<br>ativos</h6>
+                        <h6 class="card-subtitle mb-2 text-body-secondary">Produtos ativos cadastrados</h6>
                         <h5 class="card-title">
                             <?php echo $dataProdutosAtivos[0]['QTD_PRODUTOS']; ?>
                         </h5>
                     </div>
                 </div>
             </div>
-
-            <div class="card" style="width: 18rem;">
-                <div class="card-body d-flex gap-4">
-                    <div
-                        class="icon-wrapper rounded-circle bg-primary p-3 d-flex justify-content-center align-items-center">
-                        <span class="material-symbols-outlined text-white">category</span>
-                    </div>
-
-                    <div>
-                        <h6 class="card-subtitle mb-2 text-body-secondary">Categorias<br>ativas</h6>
-                        <h5 class="card-title">
-                            <?php echo $dataCategoriasAtivas[0]['QTD_CATEGORIA']; ?>
-                        </h5>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card" style="width: 18rem;">
-                <div class="card-body d-flex gap-4">
-                    <div
-                        class="icon-wrapper rounded-circle bg-primary p-3 d-flex justify-content-center align-items-center">
-                        <span class="material-symbols-outlined text-white">people</span>
-                    </div>
-
-                    <div>
-                        <h6 class="card-subtitle mb-2 text-body-secondary">Administradores ativos</h6>
-                        <h5 class="card-title">
-                            <?php echo $dataAdministradoresAtivos[0]['QTD_ADMINS']; ?>
-                        </h5>
-                    </div>
-                </div>
-            </div>
-
-            
             
         </div>
 
         <br>
 
         
-        <h5 class="card-subtitle mb-3 text-body-secondary">Últimos produtos adicionados</h5>
+        <h5 class="card-subtitle mb-3 text-body-secondary">Produtos mais vendidos</h5>
         
             <table class="table table-striped table-bordered">
-                <thead>
+                <!-- <thead>
                     <tr>
-                        <th scope="col" class="text-center">ID</th>
                         <th scope="col" class="text-center">Imagem</th>
                         <th scope="col" class="text-center">Nome</th>
+                        <th scope="col" class="text-center">Unidades vendidas</th>
                         <th scope="col" class="text-center">Ações</th>
                     </tr>
-                </thead>
+                </thead> -->
                 <tbody>
                     
                     <?php //var_dump($produtosMaisVendidos); 
-                    $i = 10;
-                    foreach ($produtosMaisVendidos as $produto): 
-                    
-                        if($i > 0) {
-                            $i--;
-                        } else {
-                            break;
-                        }
-
-                        ?>
+                    $i = 1;
+                    $prevSoldItens = 0;
+                    foreach ($produtosMaisVendidos as $produto): ?>
                         <tr>
                             <td class="text-center">
                                 <?php 
-                                    echo "#" . $produto['PRODUTO_ID'];
+                                    if($prevSoldItens == $produto['TOTAL_VENDIDO']) $i--;
+                                    echo "#" . $i;
                                 ?>
                             </td>
                             <td class="text-center">
@@ -158,6 +182,9 @@ try {
                             </td>
                             <td class="text-center">
                                 <?php echo $produto['PRODUTO_NOME']; ?>
+                            </td>
+                            <td class="text-center">
+                                <?php echo $produto['TOTAL_VENDIDO'] . " vendido(s)"?>
                             </td>
                             <td class="text-center actions">
                                 <div>
@@ -168,6 +195,8 @@ try {
                             </td>
                         </tr>
                     <?php 
+                        $i++;
+                        $prevSoldItens = $produto['TOTAL_VENDIDO'];
                         endforeach; ?>
                 </tbody>
             </table>
