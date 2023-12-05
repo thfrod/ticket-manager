@@ -37,7 +37,7 @@ try {
 
             <thead>
                 <tr>
-                    <th scope="col" class="text-center">ID</th>
+                    <!-- <th scope="col" class="text-center">ID</th> -->
                     <th scope="col" class="text-center">Nome</th>
                     <th scope="col" class="text-center">Descrição</th>
                     <th scope="col" class="text-center">Status</th>
@@ -49,9 +49,9 @@ try {
                 <?php foreach ($categorias as $categoria): ?>
                     <tr>
 
-                        <td class="text-center">
+                        <!-- <td class="text-center">
                             <?php echo $categoria['CATEGORIA_ID']; ?>
-                        </td>
+                        </td> -->
                         <td class="text-center">
                             <?php echo $categoria['CATEGORIA_NOME']; ?>
                         </td>
