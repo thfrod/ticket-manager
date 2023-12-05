@@ -19,7 +19,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
         try {
-            $stmt = $pdo->prepare("SELECT * FROM PRODUTO WHERE PRODUTO_ID = :id"); //Quando você executa uma consulta SELECT no banco de dados usando PDO e utiliza o método fetch(PDO::FETCH_ASSOC), o resultado é um array associativo, onde cada chave do array é o nome de uma coluna da tabela no banco de dados, e o valor associado a essa chave é o valor correspondente daquela coluna para o registro selecionado
+            $stmt = $pdo->prepare(" SELECT * 
+                                    FROM PRODUTO p left outer join PRODUTO_ESTOQUE pe 
+                                    on p.PRODUTO_ID = pe.PRODUTO_ID 
+                                    WHERE p.PRODUTO_ID = :id"); //Quando você executa uma consulta SELECT no banco de dados usando PDO e utiliza o método fetch(PDO::FETCH_ASSOC), o resultado é um array associativo, onde cada chave do array é o nome de uma coluna da tabela no banco de dados, e o valor associado a essa chave é o valor correspondente daquela coluna para o registro selecionado
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
             $produto = $stmt->fetch(PDO::FETCH_ASSOC); //$produto é um array associativo que contém os detalhes do produto que foi recuperado do banco de dados. Por exemplo, se a tabela de produtos tem colunas como ID, NOME, DESCRICAO, PRECO, e URL_IMAGEM, então o array $produto terá essas chaves, e você pode acessar os valores correspondentes usando a sintaxe de colchetes, 
@@ -51,6 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $descricao = $_POST['descricao'];
     $preco = $_POST['preco'];
     $desconto = $_POST['desconto'];
+    $estoque = $_POST['estoque'];
     $ativo = $_POST['status'];
     $categoria = $_POST['categoria'];
     $imagens = $_POST['imagem_url'];
@@ -67,6 +71,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->bindParam(':desconto', $desconto, PDO::PARAM_STR);
         $stmt->bindParam(':categoria', $categoria, PDO::PARAM_INT);
         $stmt->bindParam(':ativo', $ativo, PDO::PARAM_BOOL);
+        $stmt->execute();
+
+        $stmt = $pdo->prepare("UPDATE PRODUTO_ESTOQUE SET PRODUTO_QTD = :estoque WHERE PRODUTO_ID = :id");
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->bindParam(':estoque', $estoque, PDO::PARAM_INT);
         $stmt->execute();
 
         foreach ($imagens as $ordem => $url_imagem) {
@@ -136,6 +145,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <div class="input-group mb-3">
                 <input class="form-control" type="number" name="desconto" id="desconto" step="0.01" required placeholder="Desconto" value="<?php echo $produto['PRODUTO_DESCONTO']; ?>">
+            </div>
+
+            <div class="input-group mb-3">
+                <input class="form-control" type="number" name="estoque" id="estoque" step="1" required placeholder="Estoque" value="<?php echo $produto['PRODUTO_QTD'] ? $produto['PRODUTO_QTD'] : 0; ?>">
             </div>
 
             <div class="container-imgs">
