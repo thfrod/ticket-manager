@@ -57,6 +57,11 @@ body.ver-produto-content textarea.textarea {
   height: auto;
 }
 
+.painel-admin-content .cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(250px, 1fr));
+  gap: 1rem;
+}
 .painel-admin-content .icon-wrapper {
   height: fit-content;
   width: fit-content;

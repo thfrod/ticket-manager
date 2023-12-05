@@ -71,41 +71,41 @@ try {
     <div class="container my-3">
         <h2>Painel administrador</h2><br>
 
-        <div class="d-flex flex-row justify-content-between">
+        <div class="cards">
 
-        <div class="card" style="width: 18rem;">
-            <div class="card-body d-flex gap-4">
-                <div
-                    class="icon-wrapper rounded-circle bg-primary p-3 d-flex justify-content-center align-items-center">
-                    <span class="material-symbols-outlined text-white">inventory_2</span>
-                </div>
+            <div class="card">
+                <div class="card-body d-flex gap-4">
+                    <div
+                        class="icon-wrapper rounded-circle bg-primary p-3 d-flex justify-content-center align-items-center">
+                        <span class="material-symbols-outlined text-white">inventory_2</span>
+                    </div>
 
-                <div>
-                    <h6 class="card-subtitle mb-2 text-body-secondary">Produtos<br>ativos</h6>
-                    <h5 class="card-title">
-                        <?php echo $dataProdutosAtivos[0]['QTD_PRODUTOS']; ?>
-                    </h5>
-                </div>
-            </div>
-        </div>
-
-        <div class="card" style="width: 18rem;">
-            <div class="card-body d-flex gap-4">
-                <div
-                    class="icon-wrapper rounded-circle bg-primary p-3 d-flex justify-content-center align-items-center">
-                    <span class="material-symbols-outlined text-white">confirmation_number</span>
-                </div>
-
-                <div>
-                    <h6 class="card-subtitle mb-2 text-body-secondary">Tickets<br>em estoque</h6>
-                    <h5 class="card-title">
-                        <?php echo $dataProdutosEmEstoque[0]['QTD_ESTOQUE']; ?>
-                    </h5>
+                    <div>
+                        <h6 class="card-subtitle mb-2 text-body-secondary">Produtos<br>ativos</h6>
+                        <h5 class="card-title">
+                            <?php echo $dataProdutosAtivos[0]['QTD_PRODUTOS']; ?>
+                        </h5>
+                    </div>
                 </div>
             </div>
-        </div>
 
-            <div class="card" style="width: 18rem;">
+            <div class="card">
+                <div class="card-body d-flex gap-4">
+                    <div
+                        class="icon-wrapper rounded-circle bg-primary p-3 d-flex justify-content-center align-items-center">
+                        <span class="material-symbols-outlined text-white">confirmation_number</span>
+                    </div>
+
+                    <div>
+                        <h6 class="card-subtitle mb-2 text-body-secondary">Tickets<br>em estoque</h6>
+                        <h5 class="card-title">
+                            <?php echo $dataProdutosEmEstoque[0]['QTD_ESTOQUE']; ?>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
                 <div class="card-body d-flex gap-4">
                     <div
                         class="icon-wrapper rounded-circle bg-primary p-3 d-flex justify-content-center align-items-center">
@@ -121,7 +121,7 @@ try {
                 </div>
             </div>
 
-            <div class="card" style="width: 18rem;">
+            <div class="card">
                 <div class="card-body d-flex gap-4">
                     <div
                         class="icon-wrapper rounded-circle bg-primary p-3 d-flex justify-content-center align-items-center">
@@ -129,16 +129,13 @@ try {
                     </div>
 
                     <div>
-                        <h6 class="card-subtitle mb-2 text-body-secondary">Administradores ativos</h6>
+                        <h6 class="card-subtitle mb-2 text-body-secondary">Administradores<br>ativos</h6>
                         <h5 class="card-title">
                             <?php echo $dataAdministradoresAtivos[0]['QTD_ADMINS']; ?>
                         </h5>
                     </div>
                 </div>
-            </div>
-
-            
-            
+            </div>            
         </div>
 
         <br>
@@ -192,26 +189,6 @@ try {
                         endforeach; ?>
                 </tbody>
             </table>
-
-
-
-        <!-- <div class="card" style="width: 18rem;">
-            <div class="card-body d-flex gap-4">
-                <div
-                    class="icon-wrapper rounded-circle bg-primary p-3 d-flex justify-content-center align-items-center">
-                    <span class="material-symbols-outlined text-white">person</span>
-                </div>
-
-                <div>
-                    <h6 class="card-subtitle mb-2 text-body-secondary">Nº de usuários cadastrados</h6>
-                    <h5 class="card-title">
-                        <?php echo $dataTotalUsuarios[0]['TOTAL_USUARIOS']; ?>
-                    </h5>
-                </div>
-            </div>
-        </div> -->
-        
-
 
     </div>
 </body>
