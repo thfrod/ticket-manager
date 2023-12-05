@@ -29,6 +29,11 @@ try {
     $stmt->execute();
     $dataAdministradoresAtivos = $stmt->fetchAll(PDO::FETCH_ASSOC); //Recupera todos os registros retornados pela consulta SQL e os armazena na variável $produtos como um array associativo, onde as chaves do array são os nomes das colunas da tabela PRODUTOS
 
+    // TOTAL DE PRODUTOS EM ESTOQUE
+    $stmt = $pdo->prepare("SELECT sum(PRODUTO_QTD) as QTD_ESTOQUE FROM PRODUTO_ESTOQUE");
+    $stmt->execute();
+    $dataProdutosEmEstoque = $stmt->fetchAll(PDO::FETCH_ASSOC); //Recupera todos os registros retornados pela consulta SQL e os armazena na variável $produtos como um array associativo, onde as chaves do array são os nomes das colunas da tabela PRODUTOS
+
     // ÚLTIMOS PRODUTOS ADICIONADOS
     $stmt = $pdo->prepare(  "SELECT p.PRODUTO_ID, pi.PRIMEIRA_IMAGEM, p.PRODUTO_NOME
                             FROM PRODUTO p
@@ -68,21 +73,37 @@ try {
 
         <div class="d-flex flex-row justify-content-between">
 
-            <div class="card" style="width: 18rem;">
-                <div class="card-body d-flex gap-4">
-                    <div
-                        class="icon-wrapper rounded-circle bg-primary p-3 d-flex justify-content-center align-items-center">
-                        <span class="material-symbols-outlined text-white">inventory_2</span>
-                    </div>
+        <div class="card" style="width: 18rem;">
+            <div class="card-body d-flex gap-4">
+                <div
+                    class="icon-wrapper rounded-circle bg-primary p-3 d-flex justify-content-center align-items-center">
+                    <span class="material-symbols-outlined text-white">inventory_2</span>
+                </div>
 
-                    <div>
-                        <h6 class="card-subtitle mb-2 text-body-secondary">Produtos<br>ativos</h6>
-                        <h5 class="card-title">
-                            <?php echo $dataProdutosAtivos[0]['QTD_PRODUTOS']; ?>
-                        </h5>
-                    </div>
+                <div>
+                    <h6 class="card-subtitle mb-2 text-body-secondary">Produtos<br>ativos</h6>
+                    <h5 class="card-title">
+                        <?php echo $dataProdutosAtivos[0]['QTD_PRODUTOS']; ?>
+                    </h5>
                 </div>
             </div>
+        </div>
+
+        <div class="card" style="width: 18rem;">
+            <div class="card-body d-flex gap-4">
+                <div
+                    class="icon-wrapper rounded-circle bg-primary p-3 d-flex justify-content-center align-items-center">
+                    <span class="material-symbols-outlined text-white">confirmation_number</span>
+                </div>
+
+                <div>
+                    <h6 class="card-subtitle mb-2 text-body-secondary">Tickets<br>em estoque</h6>
+                    <h5 class="card-title">
+                        <?php echo $dataProdutosEmEstoque[0]['QTD_ESTOQUE']; ?>
+                    </h5>
+                </div>
+            </div>
+        </div>
 
             <div class="card" style="width: 18rem;">
                 <div class="card-body d-flex gap-4">
